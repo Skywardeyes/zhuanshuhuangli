@@ -1,0 +1,56 @@
+.cal-wrap { width: 100%; }
+
+.cal-week {
+  display: flex;
+  padding: 12rpx 0;
+}
+
+.cal-week-cell {
+  flex: 1;
+  text-align: center;
+  font-size: 24rpx;
+  color: #999;
+  font-weight: bold;
+}
+
+.cal-grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.cal-cell {
+  width: calc(100% / 7);
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-radius: 8rpx;
+}
+
+.cal-cell.empty { opacity: 0; }
+
+.cal-cell.today {
+  background: #FFF0F0;
+}
+
+.cal-day {
+  font-size: 30rpx;
+  color: #333;
+}
+
+.cal-cell.today .cal-day {
+  color: #C41E1E;
+  font-weight: bold;
+}
+
+.cal-dot {
+  width: 8rpx;
+  height: 8rpx;
+  border-radius: 50%;
+  background: #B8860B;
+  margin-top: 4rpx;
+}
+.cal-dot.good { background: #2E7D32; }
+.cal-dot.bad { background: #C41E1E; }

@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+
+# WeChat miniprogram dev tool
+.wechat/
+miniprogram_npm/
+
+# IDE & editor
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Cloud function logs
+*.log
+
+# Private config (may contain app secrets)
+project.private.config.json
+
+# Claude local settings
+.claude/settings.local.json

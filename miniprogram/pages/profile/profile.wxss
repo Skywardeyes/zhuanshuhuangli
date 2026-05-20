@@ -1,0 +1,88 @@
+page { background: #FFF8DC; }
+.container { padding: 30rpx; }
+
+.profile-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40rpx 0;
+}
+.avatar {
+  width: 120rpx;
+  height: 120rpx;
+  background: linear-gradient(135deg, #C41E1E, #8B0000);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 56rpx;
+  margin-bottom: 16rpx;
+}
+.nickname {
+  font-size: 32rpx;
+  color: #333;
+  font-weight: bold;
+}
+
+/* 卡片 */
+.card {
+  width: 100%;
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 28rpx;
+  box-sizing: border-box;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.06);
+}
+.card-title {
+  font-family: 'Songti SC', serif;
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #C41E1E;
+  margin-bottom: 16rpx;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 14rpx 0;
+  border-bottom: 1rpx solid #F5F0EB;
+}
+.info-row:last-child { border-bottom: none; }
+.info-label { color: #999; font-size: 28rpx; }
+.info-val { color: #333; font-size: 28rpx; }
+
+.edit-btn {
+  text-align: center;
+  padding: 12rpx;
+  color: #B8860B;
+  font-size: 26rpx;
+  border-top: 1rpx solid #F5F0EB;
+}
+
+/* 八字摘要 */
+.bazi-summary { text-align: center; }
+.bazi-text {
+  font-family: 'Songti SC', serif;
+  font-size: 40rpx;
+  color: #333;
+  display: block;
+  letter-spacing: 8rpx;
+}
+.bazi-sub {
+  display: block;
+  font-size: 26rpx;
+  color: #B8860B;
+  margin-top: 8rpx;
+}
+
+/* 关于 */
+.about-text text {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.8;
+  display: block;
+}
+.disclaimer {
+  color: #ccc !important;
+  font-size: 24rpx !important;
+}

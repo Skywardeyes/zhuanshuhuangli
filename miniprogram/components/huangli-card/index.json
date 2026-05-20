@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "fortune-indicator": "/components/fortune-indicator/index"
+  }
+}

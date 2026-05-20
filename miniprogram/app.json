@@ -1,0 +1,46 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/huangli/huangli",
+    "pages/profile/profile",
+    "pages/birth-input/birth-input",
+    "pages/fortune/fortune",
+    "pages/huangli-detail/huangli-detail"
+  ],
+  "window": {
+    "backgroundColor": "#FFF8DC",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#C41E1E",
+    "navigationBarTitleText": "专属黄历",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#C41E1E",
+    "backgroundColor": "#FFF8F0",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/tab/home.png",
+        "selectedIconPath": "images/tab/home-active.png"
+      },
+      {
+        "pagePath": "pages/huangli/huangli",
+        "text": "黄历",
+        "iconPath": "images/tab/calendar.png",
+        "selectedIconPath": "images/tab/calendar-active.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的",
+        "iconPath": "images/tab/user.png",
+        "selectedIconPath": "images/tab/user-active.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents"
+}

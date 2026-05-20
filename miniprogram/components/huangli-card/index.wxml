@@ -1,0 +1,41 @@
+<view class="hl-card {{compact ? 'compact' : ''}}">
+  <!-- 头部：日期 + 运势 -->
+  <view class="hl-header">
+    <view class="hl-date">
+      <text class="hl-lunar">{{huangli.lunarMonthName || ''}}{{huangli.lunarDayName || ''}}</text>
+      <text class="hl-solar">{{huangli.date || ''}}</text>
+    </view>
+    <fortune-indicator score="{{huangli.fortuneScore}}" level="{{huangli.fortuneLevel}}" size="small" />
+  </view>
+
+  <!-- 干支信息 -->
+  <view class="hl-ganzhi" wx:if="{{!compact}}">
+    <text>日柱：{{huangli.dayStem}}{{huangli.dayBranch}}</text>
+  </view>
+
+  <!-- 宜 -->
+  <view class="hl-section" wx:if="{{huangli.yi && huangli.yi.length > 0}}">
+    <text class="hl-label yi-label">宜</text>
+    <view class="hl-tags">
+      <text class="tag tag-green" wx:for="{{huangli.yi}}" wx:key="*this" wx:if="{{index < 6}}">{{item}}</text>
+    </view>
+  </view>
+
+  <!-- 忌 -->
+  <view class="hl-section" wx:if="{{huangli.ji && huangli.ji.length > 0}}">
+    <text class="hl-label ji-label">忌</text>
+    <view class="hl-tags">
+      <text class="tag tag-red" wx:for="{{huangli.ji}}" wx:key="*this" wx:if="{{index < 6}}">{{item}}</text>
+    </view>
+  </view>
+
+  <!-- 冲合提示 -->
+  <view class="hl-clash" wx:if="{{huangli.clash && huangli.clash.descriptions && huangli.clash.descriptions.length > 0 && !compact}}">
+    <text wx:for="{{huangli.clash.descriptions}}" wx:key="*this" class="clash-text">{{item}}</text>
+  </view>
+
+  <!-- 详情入口 -->
+  <view class="hl-detail-link" wx:if="{{showDetail && !compact}}" bindtap="onDetail">
+    <text>查看详情 →</text>
+  </view>
+</view>

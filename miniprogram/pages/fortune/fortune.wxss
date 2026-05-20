@@ -1,0 +1,105 @@
+page { background: #FFF8DC; }
+.container { padding: 20rpx 30rpx 60rpx; display: flex; flex-direction: column; align-items: center; }
+
+.loading-wrap { padding: 120rpx 0; text-align: center; }
+.loading-text { color: #999; }
+
+.title-primary {
+  font-family: 'Songti SC', serif;
+  font-size: 44rpx;
+  font-weight: bold;
+  color: #C41E1E;
+}
+
+/* 信息卡片 */
+.info-card {
+  width: 100%;
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  box-sizing: border-box;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.06);
+}
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16rpx 0;
+  border-bottom: 1rpx solid #F5F0EB;
+}
+.info-row:last-child { border-bottom: none; }
+.info-label { font-size: 28rpx; color: #999; }
+.info-val { font-size: 30rpx; color: #333; font-weight: bold; font-family: 'Songti SC', serif; }
+.day-master { color: #C41E1E; font-size: 36rpx; }
+
+/* 神煞 */
+.card-title {
+  font-family: 'Songti SC', serif;
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #C41E1E;
+  margin-bottom: 16rpx;
+}
+.shensha-row {
+  display: flex;
+  align-items: center;
+  padding: 10rpx 0;
+  gap: 12rpx;
+  font-size: 28rpx;
+  color: #333;
+}
+.ss-label {
+  color: #B8860B;
+  font-weight: bold;
+  width: 140rpx;
+}
+
+/* 分析 */
+.analysis-card {
+  width: 100%;
+  background: linear-gradient(135deg, #FFFBF5, #FFF8F0);
+  border-radius: 16rpx;
+  padding: 30rpx;
+  box-sizing: border-box;
+  border: 1rpx solid #F0E6D3;
+}
+.analysis-text {
+  font-size: 28rpx;
+  color: #555;
+  line-height: 2;
+}
+.disclaimer {
+  color: #999;
+  font-size: 24rpx;
+  display: block;
+  margin-top: 20rpx;
+}
+
+/* 按钮 */
+.btn-row {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+  width: 100%;
+  align-items: center;
+}
+.btn-primary {
+  width: 100%;
+  background: linear-gradient(135deg, #C41E1E, #8B0000);
+  color: #fff;
+  border-radius: 44rpx;
+  padding: 26rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  text-align: center;
+}
+.btn-outline {
+  width: 80%;
+  border: 2rpx solid #C41E1E;
+  color: #C41E1E;
+  border-radius: 44rpx;
+  padding: 20rpx;
+  font-size: 28rpx;
+  text-align: center;
+  background: transparent;
+}

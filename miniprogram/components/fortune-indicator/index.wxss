@@ -1,0 +1,21 @@
+.fi-wrap { display: flex; flex-direction: column; align-items: center; }
+.fi-ring {
+  width: 120rpx; height: 120rpx;
+  border-radius: 50%;
+  border: 6rpx solid #B8860B;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #FFFBF5;
+}
+.fi-wrap.fi-small .fi-ring { width: 80rpx; height: 80rpx; border-width: 4rpx; }
+.fi-wrap.fi-large .fi-ring { width: 160rpx; height: 160rpx; border-width: 8rpx; }
+
+.fi-score { font-size: 40rpx; font-weight: bold; line-height: 1; }
+.fi-wrap.fi-small .fi-score { font-size: 28rpx; }
+.fi-wrap.fi-large .fi-score { font-size: 52rpx; }
+
+.fi-label { font-size: 20rpx; color: #999; }
+.fi-wrap.fi-large .fi-label { font-size: 24rpx; }
+.fi-level { font-size: 24rpx; font-weight: bold; margin-top: 8rpx; }

@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "bazi-chart": "/components/bazi-chart/index",
+    "dayun-table": "/components/dayun-table/index",
+    "wuxing-chart": "/components/wuxing-chart/index"
+  },
+  "navigationBarTitleText": "八字命盘"
+}

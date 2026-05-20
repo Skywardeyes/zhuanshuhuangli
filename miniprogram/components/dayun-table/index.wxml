@@ -1,0 +1,25 @@
+<view class="dayun-wrap">
+  <view class="dayun-header">
+    <text class="dayun-title">大运排盘</text>
+    <text class="dayun-dir">{{dayun.direction}} · {{dayun.qiyunAge}}岁起运</text>
+  </view>
+
+  <scroll-view scroll-x class="dayun-scroll">
+    <view class="dayun-list">
+      <!-- 起运前小运 -->
+      <view class="dayun-item small">
+        <text class="du-age">0-{{dayun.qiyunAge - 1}}岁</text>
+        <text class="du-ganzhi">小运</text>
+      </view>
+      <!-- 各步大运 -->
+      <view
+        wx:for="{{dayun.dayunList}}"
+        wx:key="order"
+        class="dayun-item {{item.ageStart <= currentAge && item.ageEnd >= currentAge ? 'current' : ''}}"
+      >
+        <text class="du-age">{{item.ageStart}}-{{item.ageEnd}}岁</text>
+        <text class="du-ganzhi">{{item.stem}}{{item.branch}}</text>
+      </view>
+    </view>
+  </scroll-view>
+</view>

@@ -1,0 +1,27 @@
+<view class="wx-chart">
+  <view class="wx-title">五行力量分布</view>
+  <view class="wx-bars">
+    <view class="wx-bar-row" wx:for="{{wuxingList}}" wx:key="*this">
+      <text class="wx-label">{{item}}</text>
+      <view class="wx-bar-bg">
+        <view
+          class="wx-bar-fill"
+          style="width: {{(wuxingCount[item] || 0) / maxCount * 100}}%; background: {{colors[item]}};"
+        ></view>
+      </view>
+      <text class="wx-val">{{wuxingCount[item] || 0}}</text>
+    </view>
+  </view>
+
+  <!-- 喜用神 / 忌神 -->
+  <view class="wx-gods mt-md" wx:if="{{xiyong.xiyong && xiyong.xiyong.length > 0}}">
+    <view class="god-row">
+      <text class="god-label tag-green">喜用神</text>
+      <text class="god-items" wx:for="{{xiyong.xiyong}}" wx:key="*this">{{item}} </text>
+    </view>
+    <view class="god-row">
+      <text class="god-label tag-red">忌神</text>
+      <text class="god-items" wx:for="{{xiyong.jishen}}" wx:key="*this">{{item}} </text>
+    </view>
+  </view>
+</view>

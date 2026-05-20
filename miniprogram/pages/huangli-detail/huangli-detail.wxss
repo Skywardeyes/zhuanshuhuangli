@@ -1,0 +1,94 @@
+page { background: #FFF8DC; }
+.container { padding: 20rpx 30rpx 60rpx; }
+
+.loading-wrap { padding: 200rpx 0; text-align: center; }
+.loading-text { color: #999; }
+
+/* 英雄区 */
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30rpx;
+  background: linear-gradient(135deg, #FFFBF5, #FFF8F0);
+  border-radius: 16rpx;
+  border: 1rpx solid #F0E6D3;
+  margin-bottom: 20rpx;
+}
+.hero-lunar {
+  font-family: 'Songti SC', serif;
+  font-size: 44rpx;
+  font-weight: bold;
+  color: #C41E1E;
+  display: block;
+}
+.hero-solar {
+  font-size: 26rpx;
+  color: #999;
+  display: block;
+  margin-top: 4rpx;
+}
+.hero-ganzhi {
+  font-size: 28rpx;
+  color: #B8860B;
+  display: block;
+  margin-top: 8rpx;
+  font-family: 'Songti SC', serif;
+}
+
+/* 卡片 */
+.card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.06);
+}
+.card-title {
+  font-family: 'Songti SC', serif;
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #C41E1E;
+  margin-bottom: 16rpx;
+}
+.yi-title { color: #2E7D32; }
+.ji-title { color: #C41E1E; }
+
+.tags-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+}
+
+.tag {
+  padding: 8rpx 20rpx;
+  border-radius: 10rpx;
+  font-size: 26rpx;
+}
+.tag-green { background: #E8F5E9; color: #2E7D32; }
+.tag-red { background: #FDE8E8; color: #C41E1E; }
+
+.clash-desc {
+  display: block;
+  font-size: 28rpx;
+  color: #555;
+  line-height: 2;
+  padding: 6rpx 0;
+  border-bottom: 1rpx dashed #F0E6D3;
+}
+.clash-desc:last-child { border-bottom: none; }
+
+.wx-desc { font-size: 28rpx; color: #333; display: block; }
+.wx-tip { font-size: 26rpx; color: #B8860B; display: block; }
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 16rpx 0;
+  border-bottom: 1rpx solid #F5F0EB;
+}
+.info-row:last-child { border-bottom: none; }
+.info-label { color: #999; font-size: 26rpx; }
+.info-val { color: #333; font-size: 28rpx; }
+
+.disclaimer { text-align: center; }
+.disclaimer text { color: #ccc; font-size: 24rpx; }

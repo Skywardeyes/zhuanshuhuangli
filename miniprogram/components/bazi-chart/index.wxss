@@ -1,0 +1,64 @@
+.bazi-table {
+  width: 100%;
+  background: #FFFBF5;
+  border: 2rpx solid #C41E1E;
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+
+.table-row {
+  display: flex;
+  border-bottom: 1rpx solid #E8DDD0;
+}
+.table-row:last-child { border-bottom: none; }
+.table-row.header {
+  background: linear-gradient(135deg, #C41E1E, #8B0000);
+}
+.table-row.header .cell {
+  color: #FFD700;
+  font-weight: bold;
+  font-size: 28rpx;
+}
+
+.cell {
+  flex: 1;
+  padding: 20rpx 4rpx;
+  text-align: center;
+  font-size: 30rpx;
+  color: #333;
+  font-family: 'Songti SC', serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cell.label {
+  flex: 0.6;
+  font-size: 24rpx;
+  color: #999;
+  font-family: inherit;
+}
+
+.day-col {
+  background: #FFF0F0;
+  border-left: 1rpx solid #F5D0D0;
+  border-right: 1rpx solid #F5D0D0;
+}
+
+.day-master {
+  color: #C41E1E;
+  font-weight: bold;
+  font-size: 36rpx;
+}
+
+.canggan-row .cell {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.toggle-canggan {
+  text-align: center;
+  padding: 16rpx;
+  font-size: 24rpx;
+  color: #B8860B;
+}

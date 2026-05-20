@@ -1,0 +1,76 @@
+.dayun-wrap {
+  width: 100%;
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  box-sizing: border-box;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.06);
+}
+
+.dayun-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.dayun-title {
+  font-family: 'Songti SC', serif;
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #C41E1E;
+}
+
+.dayun-dir {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.dayun-scroll {
+  width: 100%;
+  white-space: nowrap;
+}
+
+.dayun-list {
+  display: inline-flex;
+  gap: 16rpx;
+}
+
+.dayun-item {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16rpx 24rpx;
+  border-radius: 12rpx;
+  background: #FFFBF5;
+  border: 1rpx solid #E8DDD0;
+  min-width: 120rpx;
+}
+
+.dayun-item.small {
+  opacity: 0.6;
+  background: #F5F5F5;
+}
+
+.dayun-item.current {
+  background: linear-gradient(135deg, #C41E1E, #8B0000);
+  border-color: #C41E1E;
+}
+
+.dayun-item.current .du-age,
+.dayun-item.current .du-ganzhi {
+  color: #FFD700;
+}
+
+.du-age {
+  font-size: 22rpx;
+  color: #999;
+}
+
+.du-ganzhi {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+  font-family: 'Songti SC', serif;
+  margin-top: 6rpx;
+}

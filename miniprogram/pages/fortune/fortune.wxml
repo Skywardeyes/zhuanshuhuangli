@@ -1,0 +1,80 @@
+<view class="container">
+  <view wx:if="{{loading}}" class="loading-wrap">
+    <text class="loading-text">加载中...</text>
+  </view>
+
+  <block wx:if="{{!loading && bazi}}">
+    <!-- 标题 -->
+    <view class="title-primary mt-md">八字命盘</view>
+    <text class="text-sub mt-sm">
+      {{bazi.birthYear}}年{{bazi.birthMonth}}月{{bazi.birthDay}}日 · {{bazi.gender}}
+    </text>
+
+    <!-- 四柱八字表 -->
+    <view class="mt-lg" style="width:100%">
+      <bazi-chart pillars="{{pillars}}" />
+    </view>
+
+    <!-- 日主 & 格局 -->
+    <view class="info-card mt-md">
+      <view class="info-row">
+        <text class="info-label">日主</text>
+        <text class="info-val day-master">{{bazi.dayMaster}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">旺衰</text>
+        <text class="info-val">{{bazi.strength.strength || ''}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">格局</text>
+        <text class="info-val">{{bazi.pattern || ''}}</text>
+      </view>
+    </view>
+
+    <!-- 大运 -->
+    <view class="mt-md" style="width:100%">
+      <dayun-table dayun="{{bazi.dayun}}" currentAge="{{currentAge}}" />
+    </view>
+
+    <!-- 五行 -->
+    <view class="mt-md" style="width:100%">
+      <wuxing-chart wuxingCount="{{bazi.wuxingCount}}" xiyong="{{bazi.xiyong}}" />
+    </view>
+
+    <!-- 神煞 -->
+    <view class="info-card mt-md" wx:if="{{bazi.shensha}}">
+      <view class="card-title">神煞</view>
+      <view class="shensha-row" wx:if="{{bazi.shensha.tianyi}}">
+        <text class="ss-label">天乙贵人</text>
+        <text wx:for="{{bazi.shensha.tianyi}}" wx:key="*this">{{item}} </text>
+      </view>
+      <view class="shensha-row" wx:if="{{bazi.shensha.wenchang}}">
+        <text class="ss-label">文昌贵人</text>
+        <text>{{bazi.shensha.wenchang}}</text>
+      </view>
+      <view class="shensha-row" wx:if="{{bazi.shensha.yima}}">
+        <text class="ss-label">驿马</text>
+        <text>{{bazi.shensha.yima}}</text>
+      </view>
+      <view class="shensha-row" wx:if="{{bazi.shensha.taohua}}">
+        <text class="ss-label">桃花</text>
+        <text>{{bazi.shensha.taohua}}</text>
+      </view>
+    </view>
+
+    <!-- 分析摘要 -->
+    <view class="analysis-card mt-md">
+      <view class="card-title">命理简析</view>
+      <view class="analysis-text">
+        <text>{{analysisText}}</text>
+        <text class="disclaimer">\n命理分析仅供文化参考，人生在于自身的努力和选择。</text>
+      </view>
+    </view>
+
+    <!-- 按钮 -->
+    <view class="btn-row mt-lg mb-md">
+      <button class="btn-primary" bindtap="goToHuangli">查看专属黄历</button>
+      <button class="btn-outline" bindtap="goHome">返回首页</button>
+    </view>
+  </block>
+</view>

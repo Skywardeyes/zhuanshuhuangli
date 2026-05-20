@@ -1,0 +1,7 @@
+<view class="fi-wrap fi-{{size}}">
+  <view class="fi-ring" style="border-color: {{levelColor[level] || '#B8860B'}}">
+    <text class="fi-score" style="color: {{levelColor[level] || '#B8860B'}}">{{score}}</text>
+    <text class="fi-label">分</text>
+  </view>
+  <text class="fi-level" style="color: {{levelColor[level] || '#B8860B'}}">{{level}}</text>
+</view>

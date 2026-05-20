@@ -1,0 +1,60 @@
+page { background: #FFF8DC; }
+.container { padding: 20rpx 30rpx 40rpx; }
+
+/* 月份切换 */
+.month-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 0;
+  margin-bottom: 10rpx;
+}
+.month-arrow {
+  font-size: 28rpx;
+  color: #C41E1E;
+  padding: 16rpx;
+}
+.month-title {
+  font-family: 'Songti SC', serif;
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+/* 日历卡片 */
+.card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 20rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.06);
+}
+
+/* 今日标题 */
+.section-title {
+  font-family: 'Songti SC', serif;
+  font-size: 30rpx;
+  color: #C41E1E;
+  margin-bottom: 16rpx;
+}
+
+/* empty */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 200rpx;
+  color: #999;
+  font-size: 28rpx;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #C41E1E, #8B0000);
+  color: #fff;
+  border-radius: 44rpx;
+  padding: 24rpx 60rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.loading-wrap { text-align: center; padding: 40rpx 0; }
+.loading-text { color: #999; font-size: 26rpx; }

@@ -1,0 +1,58 @@
+<view class="bazi-table">
+  <!-- 表头 -->
+  <view class="table-row header">
+    <view class="cell label"></view>
+    <view class="cell">年柱</view>
+    <view class="cell">月柱</view>
+    <view class="cell day-col">日柱</view>
+    <view class="cell">时柱</view>
+  </view>
+
+  <!-- 天干 -->
+  <view class="table-row">
+    <view class="cell label">天干</view>
+    <view class="cell">{{pillars.year.stem || '-'}}</view>
+    <view class="cell">{{pillars.month.stem || '-'}}</view>
+    <view class="cell day-col day-master">{{pillars.day.stem || '-'}}</view>
+    <view class="cell">{{pillars.hour.stem || '?'}}</view>
+  </view>
+
+  <!-- 地支 -->
+  <view class="table-row">
+    <view class="cell label">地支</view>
+    <view class="cell">{{pillars.year.branch || '-'}}</view>
+    <view class="cell">{{pillars.month.branch || '-'}}</view>
+    <view class="cell day-col">{{pillars.day.branch || '-'}}</view>
+    <view class="cell">{{pillars.hour.branch || '?'}}</view>
+  </view>
+
+  <!-- 十神 -->
+  <view class="table-row">
+    <view class="cell label">十神</view>
+    <view class="cell">{{pillars.year.shishen || ''}}</view>
+    <view class="cell">{{pillars.month.shishen || ''}}</view>
+    <view class="cell day-col">日主</view>
+    <view class="cell">{{pillars.hour.shishen || ''}}</view>
+  </view>
+
+  <!-- 藏干 (可折叠) -->
+  <view class="table-row canggan-row" wx:if="{{showCanggan}}">
+    <view class="cell label">藏干</view>
+    <view class="cell canggan-cell">
+      <text wx:for="{{pillars.year.canggan}}" wx:key="gan">{{item.gan}} </text>
+    </view>
+    <view class="cell canggan-cell">
+      <text wx:for="{{pillars.month.canggan}}" wx:key="gan">{{item.gan}} </text>
+    </view>
+    <view class="cell canggan-cell day-col">
+      <text wx:for="{{pillars.day.canggan}}" wx:key="gan">{{item.gan}} </text>
+    </view>
+    <view class="cell canggan-cell">
+      <text wx:for="{{pillars.hour.canggan}}" wx:key="gan">{{item.gan}} </text>
+    </view>
+  </view>
+
+  <view class="toggle-canggan" bindtap="toggleCanggan">
+    <text>{{showCanggan ? '收起藏干 ▲' : '展开藏干 ▼'}}</text>
+  </view>
+</view>

@@ -1,0 +1,81 @@
+<view class="container">
+  <!-- 未排盘：引导页 -->
+  <view wx:if="{{!hasBazi}}" class="welcome">
+    <view class="welcome-icon">☯</view>
+    <view class="title-primary mt-md">专属黄历</view>
+    <view class="welcome-sub mt-sm">输入生辰八字，定制您的每日运势指南</view>
+    <button class="btn-primary mt-lg" bindtap="goToBazi">开始排盘</button>
+    <view class="welcome-desc mt-lg">
+      <text>基于《穷通宝典》《三命通会》《滴天髓》</text>
+      <text>《渊海子平》《子平真诠》等经典典籍</text>
+    </view>
+  </view>
+
+  <!-- 已排盘：今日运势 -->
+  <block wx:if="{{hasBazi}}">
+    <view class="today-header">
+      <text class="greeting">{{userName ? userName + '，' : ''}}今日运势</text>
+    </view>
+
+    <view wx:if="{{todayHuangli}}" class="today-card">
+      <view class="today-top">
+        <view class="today-date">
+          <text class="td-lunar">{{todayHuangli.lunarMonthName || ''}}{{todayHuangli.lunarDayName || ''}}</text>
+          <text class="td-solar">{{todayHuangli.date}}</text>
+        </view>
+        <fortune-indicator score="{{todayHuangli.fortuneScore}}" level="{{todayHuangli.fortuneLevel}}" size="large" />
+      </view>
+
+      <view class="today-yi-ji mt-md">
+        <view class="yij-col">
+          <text class="yij-label yi-label">宜</text>
+          <text wx:for="{{todayHuangli.yi}}" wx:key="*this" wx:if="{{index < 4}}" class="yij-item">{{item}}</text>
+        </view>
+        <view class="yij-divider"></view>
+        <view class="yij-col">
+          <text class="yij-label ji-label">忌</text>
+          <text wx:for="{{todayHuangli.ji}}" wx:key="*this" wx:if="{{index < 4}}" class="yij-item">{{item}}</text>
+        </view>
+      </view>
+
+      <view class="today-clash mt-md" wx:if="{{todayHuangli.clash && todayHuangli.clash.descriptions && todayHuangli.clash.descriptions.length > 0}}">
+        <text wx:for="{{todayHuangli.clash.descriptions}}" wx:key="*this" wx:if="{{index < 2}}">{{item}}</text>
+      </view>
+    </view>
+
+    <view wx:if="{{!todayHuangli && loading}}" class="loading-wrap">
+      <text class="loading-text">加载今日运势...</text>
+    </view>
+
+    <view class="quick-actions mt-lg">
+      <view class="qa-item" bindtap="goToHuangli">
+        <text class="qa-icon">📅</text>
+        <text class="qa-text">查看黄历</text>
+      </view>
+      <view class="qa-item" bindtap="goToFortune">
+        <text class="qa-icon">☯</text>
+        <text class="qa-text">八字命盘</text>
+      </view>
+    </view>
+  </block>
+
+  <!-- 调试面板 -->
+  <view class="debug-area mt-lg" bindtap="toggleDebug">
+    <text class="debug-toggle">🔧 环境检测</text>
+  </view>
+  <view class="debug-panel" wx:if="{{showDebug}}">
+    <view class="debug-row">
+      <text class="debug-label">环境ID</text>
+      <text class="debug-val">{{envId}}</text>
+    </view>
+    <view class="debug-row">
+      <text class="debug-label">连接状态</text>
+      <text class="debug-val {{envReady ? 'green' : 'red'}}">{{envMsg}}</text>
+    </view>
+    <view class="debug-row">
+      <text class="debug-label">已有八字</text>
+      <text class="debug-val">{{hasBazi ? '是' : '否'}}</text>
+    </view>
+    <button class="debug-retry" bindtap="toggleDebug">刷新检测</button>
+  </view>
+</view>

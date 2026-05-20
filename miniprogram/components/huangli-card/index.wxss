@@ -1,0 +1,103 @@
+.hl-card {
+  width: 100%;
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  box-sizing: border-box;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.06);
+  border-left: 4rpx solid #C41E1E;
+}
+
+.hl-card.compact {
+  padding: 16rpx;
+  border-left-width: 2rpx;
+}
+
+/* 头部 */
+.hl-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hl-lunar {
+  font-family: 'Songti SC', serif;
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  display: block;
+}
+
+.hl-solar {
+  font-size: 24rpx;
+  color: #999;
+  display: block;
+  margin-top: 4rpx;
+}
+
+.compact .hl-lunar { font-size: 28rpx; }
+.compact .hl-solar { font-size: 20rpx; }
+
+/* 干支 */
+.hl-ganzhi {
+  text-align: center;
+  padding: 12rpx;
+  color: #B8860B;
+  font-size: 26rpx;
+}
+
+/* 宜忌 */
+.hl-section {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 16rpx;
+  gap: 12rpx;
+}
+
+.hl-label {
+  font-weight: bold;
+  font-size: 28rpx;
+  width: 40rpx;
+  text-align: center;
+  padding-top: 4rpx;
+}
+
+.yi-label { color: #2E7D32; }
+.ji-label { color: #C41E1E; }
+
+.hl-tags {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8rpx;
+}
+
+.tag {
+  padding: 4rpx 16rpx;
+  border-radius: 8rpx;
+  font-size: 22rpx;
+}
+.tag-green { background: #E8F5E9; color: #2E7D32; }
+.tag-red { background: #FDE8E8; color: #C41E1E; }
+
+/* 冲合 */
+.hl-clash {
+  margin-top: 16rpx;
+  padding: 12rpx;
+  background: #FFF8E1;
+  border-radius: 8rpx;
+}
+.clash-text {
+  font-size: 24rpx;
+  color: #B8860B;
+  display: block;
+  line-height: 1.8;
+}
+
+/* 详情链接 */
+.hl-detail-link {
+  text-align: right;
+  margin-top: 16rpx;
+  font-size: 26rpx;
+  color: #C41E1E;
+}

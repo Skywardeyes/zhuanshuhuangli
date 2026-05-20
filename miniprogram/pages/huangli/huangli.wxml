@@ -1,0 +1,40 @@
+<view class="container">
+  <!-- 未排盘提示 -->
+  <view wx:if="{{noBazi}}" class="empty-state mt-lg">
+    <text>请先完成八字排盘</text>
+    <button class="btn-primary mt-lg" bindtap="goToBazi">前往排盘</button>
+  </view>
+
+  <block wx:if="{{!noBazi}}">
+    <!-- 月份切换 -->
+    <view class="month-header">
+      <view class="month-arrow" bindtap="prevMonth">◀</view>
+      <view class="month-title">
+        <text>{{year}}年 {{month}}月</text>
+      </view>
+      <view class="month-arrow" bindtap="nextMonth">▶</view>
+    </view>
+
+    <!-- 日历 -->
+    <view class="card">
+      <calendar-grid
+        year="{{year}}"
+        month="{{month}}"
+        monthData="{{monthData}}"
+        today="{{today}}"
+        bind:daytap="onDayTap"
+      />
+    </view>
+
+    <!-- 加载 -->
+    <view wx:if="{{loading && monthData.length === 0}}" class="loading-wrap">
+      <text class="loading-text">加载中...</text>
+    </view>
+
+    <!-- 今日黄历卡片 -->
+    <view class="mt-md" style="width:100%" wx:if="{{todayHuangli}}">
+      <view class="section-title">今日黄历</view>
+      <huangli-card huangli="{{todayHuangli}}" showDetail="{{true}}" bind:tap="onTodayDetail" />
+    </view>
+  </block>
+</view>

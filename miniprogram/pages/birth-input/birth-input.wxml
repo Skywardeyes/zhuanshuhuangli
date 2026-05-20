@@ -1,0 +1,85 @@
+<view class="container">
+  <!-- 进度条 -->
+  <view class="progress-wrap">
+    <view class="progress-bar">
+      <view class="progress-fill" style="width: {{step / totalSteps * 100}}%"></view>
+    </view>
+    <text class="step-text">{{step}}/{{totalSteps}}</text>
+  </view>
+
+  <!-- Step 1: 性别 -->
+  <view class="step-content" wx:if="{{step === 1}}">
+    <view class="title-primary">您的性别是？</view>
+    <view class="sub-title">性别决定大运顺逆排列</view>
+    <view class="gender-row mt-lg">
+      <view class="gender-card {{gender === '男' ? 'selected' : ''}}" data-gender="男" bindtap="selectGender">
+        <text class="gender-symbol">♂</text>
+        <text>男</text>
+      </view>
+      <view class="gender-card {{gender === '女' ? 'selected' : ''}}" data-gender="女" bindtap="selectGender">
+        <text class="gender-symbol">♀</text>
+        <text>女</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- Step 2: 生日 -->
+  <view class="step-content" wx:if="{{step === 2}}">
+    <view class="title-primary">您的生日是？</view>
+    <view class="calendar-toggle mt-md" bindtap="toggleCalendarType">
+      <text class="{{calendarType === 'solar' ? 'active' : ''}}">阳历</text>
+      <view class="toggle-box"><view class="toggle-dot {{calendarType === 'lunar' ? 'right' : ''}}"></view></view>
+      <text class="{{calendarType === 'lunar' ? 'active' : ''}}">农历</text>
+    </view>
+    <picker mode="date" value="{{birthday}}" start="1900-01-01" bindchange="onDateChange">
+      <view class="date-picker mt-lg">
+        <text class="{{birthday ? '' : 'placeholder'}}">{{birthday || '点击选择日期'}}</text>
+        <text class="arrow">▼</text>
+      </view>
+    </picker>
+  </view>
+
+  <!-- Step 3: 时辰 -->
+  <view class="step-content" wx:if="{{step === 3}}">
+    <view class="title-primary">出生时辰是？</view>
+    <view class="sub-title">不确定可跳过</view>
+    <view class="shichen-grid mt-lg">
+      <view
+        wx:for="{{shichenOptions}}"
+        wx:key="value"
+        data-index="{{index}}"
+        class="shichen-item {{shichen === item.value ? 'selected' : ''}}"
+        bindtap="onShichenSelect"
+      >
+        <text class="shi-name">{{item.value}}时</text>
+        <text class="shi-time">({{item.label.split('(')[1].replace(')', '')}})</text>
+      </view>
+    </view>
+    <view class="skip-row mt-md" bindtap="skipShichen">
+      <text class="skip-text">不确定，跳过 →</text>
+    </view>
+  </view>
+
+  <!-- Step 4: 出生地 -->
+  <view class="step-content" wx:if="{{step === 4}}">
+    <view class="title-primary">出生地是？</view>
+    <view class="sub-title">用于真太阳时校正</view>
+    <picker mode="region" bindchange="onRegionChange">
+      <view class="date-picker mt-lg">
+        <text class="{{birthplace ? '' : 'placeholder'}}">{{birthplace || '点击选择省/市'}}</text>
+        <text class="arrow">▼</text>
+      </view>
+    </picker>
+  </view>
+
+  <!-- 错误 -->
+  <view class="error-msg" wx:if="{{errorMsg}}">{{errorMsg}}</view>
+
+  <!-- 按钮 -->
+  <view class="btn-row">
+    <button class="btn-outline" wx:if="{{step > 1}}" bindtap="prevStep">上一步</button>
+    <button class="btn-primary" bindtap="nextStep" disabled="{{submitting}}">
+      {{submitting ? '计算中...' : (step === totalSteps ? '开始排盘' : '下一步')}}
+    </button>
+  </view>
+</view>

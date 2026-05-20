@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "calendar-grid": "/components/calendar-grid/index",
+    "huangli-card": "/components/huangli-card/index"
+  },
+  "navigationBarTitleText": "专属黄历"
+}
