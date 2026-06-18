@@ -1,81 +1,81 @@
-<view class="container">
+<view class="container" style="background: {{currentTheme.bg}}; min-height: 100vh;">
   <!-- 未排盘：引导页 -->
   <view wx:if="{{!hasBazi}}" class="welcome">
     <view class="welcome-icon">☯</view>
-    <view class="title-primary mt-md">专属黄历</view>
-    <view class="welcome-sub mt-sm">输入生辰八字，定制您的每日运势指南</view>
-    <button class="btn-primary mt-lg" bindtap="goToBazi">开始排盘</button>
+    <view class="title-primary mt-md" style="color: {{currentTheme.primary}};">专属黄历</view>
+    <view class="welcome-sub mt-sm" style="color: {{currentTheme.subText}};">输入生辰八字，定制您的每日运势指南</view>
+    <button class="btn-primary mt-lg" style="background: {{currentTheme.gradient}}; color: {{currentTheme.btnText}};" bindtap="goToBazi">开始排盘</button>
     <view class="welcome-desc mt-lg">
-      <text>基于《穷通宝典》《三命通会》《滴天髓》</text>
-      <text>《渊海子平》《子平真诠》等经典典籍</text>
+      <text style="color: {{currentTheme.mutedText}};">基于《穷通宝典》《三命通会》《滴天髓》</text>
+      <text style="color: {{currentTheme.mutedText}};">《渊海子平》《子平真诠》等经典典籍</text>
     </view>
   </view>
 
   <!-- 已排盘：今日运势 -->
   <block wx:if="{{hasBazi}}">
     <view class="today-header">
-      <text class="greeting">{{userName ? userName + '，' : ''}}今日运势</text>
+      <text class="greeting" style="color: {{currentTheme.text}};">{{userName ? userName + '，' : ''}}今日运势</text>
     </view>
 
-    <view wx:if="{{todayHuangli}}" class="today-card">
+    <view wx:if="{{todayHuangli}}" class="today-card" style="border-color: {{currentTheme.border}}; background: {{currentTheme.cardGradient}};">
       <view class="today-top">
         <view class="today-date">
-          <text class="td-lunar">{{todayHuangli.lunarMonthName || ''}}{{todayHuangli.lunarDayName || ''}}</text>
-          <text class="td-solar">{{todayHuangli.date}}</text>
+          <text class="td-lunar" style="color: {{currentTheme.primary}};">{{todayHuangli.lunarMonthName || ''}}{{todayHuangli.lunarDayName || ''}}</text>
+          <text class="td-solar" style="color: {{currentTheme.subText}};">{{todayHuangli.date}}</text>
         </view>
-        <fortune-indicator score="{{todayHuangli.fortuneScore}}" level="{{todayHuangli.fortuneLevel}}" size="large" />
+        <fortune-indicator score="{{todayHuangli.fortuneScore}}" level="{{todayHuangli.fortuneLevel}}" size="large" currentTheme="{{currentTheme}}" />
       </view>
 
       <view class="today-yi-ji mt-md">
         <view class="yij-col">
-          <text class="yij-label yi-label">宜</text>
-          <text wx:for="{{todayHuangli.yi}}" wx:key="*this" wx:if="{{index < 4}}" class="yij-item">{{item}}</text>
+          <text class="yij-label yi-label" style="color: {{currentTheme.yiColor}};">宜</text>
+          <text wx:for="{{todayHuangli.yi}}" wx:key="*this" wx:if="{{index < 4}}" class="yij-item" style="color: {{currentTheme.subText}};">{{item}}</text>
         </view>
-        <view class="yij-divider"></view>
+        <view class="yij-divider" style="background: {{currentTheme.divider}};"></view>
         <view class="yij-col">
-          <text class="yij-label ji-label">忌</text>
-          <text wx:for="{{todayHuangli.ji}}" wx:key="*this" wx:if="{{index < 4}}" class="yij-item">{{item}}</text>
+          <text class="yij-label ji-label" style="color: {{currentTheme.jiColor}};">忌</text>
+          <text wx:for="{{todayHuangli.ji}}" wx:key="*this" wx:if="{{index < 4}}" class="yij-item" style="color: {{currentTheme.subText}};">{{item}}</text>
         </view>
       </view>
 
-      <view class="today-clash mt-md" wx:if="{{todayHuangli.clash && todayHuangli.clash.descriptions && todayHuangli.clash.descriptions.length > 0}}">
-        <text wx:for="{{todayHuangli.clash.descriptions}}" wx:key="*this" wx:if="{{index < 2}}">{{item}}</text>
+      <view class="today-clash mt-md" style="background: {{currentTheme.clashBg}};" wx:if="{{todayHuangli.clash && todayHuangli.clash.descriptions && todayHuangli.clash.descriptions.length > 0}}">
+        <text wx:for="{{todayHuangli.clash.descriptions}}" wx:key="*this" wx:if="{{index < 2}}" style="color: {{currentTheme.clashText}};">{{item}}</text>
       </view>
     </view>
 
     <view wx:if="{{!todayHuangli && loading}}" class="loading-wrap">
-      <text class="loading-text">加载今日运势...</text>
+      <text class="loading-text" style="color: {{currentTheme.subText}};">加载今日运势...</text>
     </view>
 
     <view class="quick-actions mt-lg">
-      <view class="qa-item" bindtap="goToHuangli">
+      <view class="qa-item" style="border-color: {{currentTheme.border}};" bindtap="goToHuangli">
         <text class="qa-icon">📅</text>
-        <text class="qa-text">查看黄历</text>
+        <text class="qa-text" style="color: {{currentTheme.bodyText}};">查看黄历</text>
       </view>
-      <view class="qa-item" bindtap="goToFortune">
+      <view class="qa-item" style="border-color: {{currentTheme.border}};" bindtap="goToFortune">
         <text class="qa-icon">☯</text>
-        <text class="qa-text">八字命盘</text>
+        <text class="qa-text" style="color: {{currentTheme.bodyText}};">八字命盘</text>
       </view>
     </view>
   </block>
 
   <!-- 调试面板 -->
   <view class="debug-area mt-lg" bindtap="toggleDebug">
-    <text class="debug-toggle">🔧 环境检测</text>
+    <text class="debug-toggle" style="color: {{currentTheme.mutedText}};">🔧 环境检测</text>
   </view>
-  <view class="debug-panel" wx:if="{{showDebug}}">
+  <view class="debug-panel" wx:if="{{showDebug}}" style="border-color: {{currentTheme.border}};">
     <view class="debug-row">
-      <text class="debug-label">环境ID</text>
-      <text class="debug-val">{{envId}}</text>
+      <text class="debug-label" style="color: {{currentTheme.subText}};">环境ID</text>
+      <text class="debug-val" style="color: {{currentTheme.bodyText}};">{{envId}}</text>
     </view>
     <view class="debug-row">
-      <text class="debug-label">连接状态</text>
+      <text class="debug-label" style="color: {{currentTheme.subText}};">连接状态</text>
       <text class="debug-val {{envReady ? 'green' : 'red'}}">{{envMsg}}</text>
     </view>
     <view class="debug-row">
-      <text class="debug-label">已有八字</text>
-      <text class="debug-val">{{hasBazi ? '是' : '否'}}</text>
+      <text class="debug-label" style="color: {{currentTheme.subText}};">已有八字</text>
+      <text class="debug-val" style="color: {{currentTheme.bodyText}};">{{hasBazi ? '是' : '否'}}</text>
     </view>
-    <button class="debug-retry" bindtap="toggleDebug">刷新检测</button>
+    <button class="debug-retry" style="color: {{currentTheme.subText}};" bindtap="toggleDebug">刷新检测</button>
   </view>
 </view>

@@ -1,67 +1,67 @@
-<view class="container">
+<view class="container" style="background: {{currentTheme.bg}}; min-height: 100vh;">
   <view wx:if="{{loading}}" class="loading-wrap">
-    <text class="loading-text">加载黄历中...</text>
+    <text class="loading-text" style="color: {{currentTheme.subText}};">加载黄历中...</text>
   </view>
 
   <block wx:if="{{!loading && huangli}}">
     <!-- 运势大分 -->
-    <view class="hero">
+    <view class="hero" style="border-color: {{currentTheme.border}}; background: {{currentTheme.heroGradient}};">
       <view class="hero-left">
-        <text class="hero-lunar">{{huangli.lunarMonthName || ''}}{{huangli.lunarDayName || ''}}</text>
-        <text class="hero-solar">{{huangli.date}}</text>
-        <text class="hero-ganzhi">{{huangli.dayStem}}{{huangli.dayBranch}}日</text>
+        <text class="hero-lunar" style="color: {{currentTheme.primary}};">{{huangli.lunarMonthName || ''}}{{huangli.lunarDayName || ''}}</text>
+        <text class="hero-solar" style="color: {{currentTheme.subText}};">{{huangli.date}}</text>
+        <text class="hero-ganzhi" style="color: {{currentTheme.accent}};">{{huangli.dayStem}}{{huangli.dayBranch}}日</text>
       </view>
-      <fortune-indicator score="{{huangli.fortuneScore}}" level="{{huangli.fortuneLevel}}" size="large" />
+      <fortune-indicator score="{{huangli.fortuneScore}}" level="{{huangli.fortuneLevel}}" size="large" currentTheme="{{currentTheme}}" />
     </view>
 
     <!-- 完整宜忌 -->
-    <view class="card">
-      <view class="card-title yi-title">宜</view>
+    <view class="card" style="border-color: {{currentTheme.border}};">
+      <view class="card-title yi-title" style="color: {{currentTheme.yiColor}};">宜</view>
       <view class="tags-wrap">
-        <text class="tag tag-green" wx:for="{{huangli.yi}}" wx:key="*this">{{item}}</text>
-        <text wx:if="{{huangli.yi.length === 0}}" class="text-gray">无特别宜事</text>
+        <text class="tag tag-green" style="background: {{currentTheme.tagBg}}; color: {{currentTheme.yiColor}};" wx:for="{{huangli.yi}}" wx:key="*this">{{item}}</text>
+        <text wx:if="{{huangli.yi.length === 0}}" class="text-gray" style="color: {{currentTheme.mutedText}};">无特别宜事</text>
       </view>
 
-      <view class="card-title ji-title mt-md">忌</view>
+      <view class="card-title ji-title mt-md" style="color: {{currentTheme.jiColor}};">忌</view>
       <view class="tags-wrap">
-        <text class="tag tag-red" wx:for="{{huangli.ji}}" wx:key="*this">{{item}}</text>
-        <text wx:if="{{huangli.ji.length === 0}}" class="text-gray">无特别忌事</text>
+        <text class="tag tag-red" style="background: {{currentTheme.highlight}}; color: {{currentTheme.jiColor}};" wx:for="{{huangli.ji}}" wx:key="*this">{{item}}</text>
+        <text wx:if="{{huangli.ji.length === 0}}" class="text-gray" style="color: {{currentTheme.mutedText}};">无特别忌事</text>
       </view>
     </view>
 
     <!-- 与八字的关系 -->
-    <view class="card mt-md" wx:if="{{huangli.clash && huangli.clash.descriptions}}">
-      <view class="card-title">与您八字的关系</view>
+    <view class="card mt-md" style="border-color: {{currentTheme.border}};" wx:if="{{huangli.clash && huangli.clash.descriptions}}">
+      <view class="card-title" style="color: {{currentTheme.primary}};">与您八字的关系</view>
       <view wx:for="{{huangli.clash.descriptions}}" wx:key="*this">
-        <text class="clash-desc">{{item}}</text>
+        <text class="clash-desc" style="color: {{currentTheme.subText}}; border-color: {{currentTheme.divider}};">{{item}}</text>
       </view>
     </view>
 
     <!-- 五行运势 -->
-    <view class="card mt-md" wx:if="{{huangli.wuxingFortune}}">
-      <view class="card-title">五行运势</view>
-      <text class="wx-desc">今日五行：{{huangli.wuxingFortune.wuxing || ''}}</text>
-      <text class="wx-tip mt-sm">{{huangli.wuxingFortune.description || ''}}</text>
+    <view class="card mt-md" style="border-color: {{currentTheme.border}};" wx:if="{{huangli.wuxingFortune}}">
+      <view class="card-title" style="color: {{currentTheme.primary}};">五行运势</view>
+      <text class="wx-desc" style="color: {{currentTheme.bodyText}};">今日五行：{{huangli.wuxingFortune.wuxing || ''}}</text>
+      <text class="wx-tip mt-sm" style="color: {{currentTheme.accent}};">{{huangli.wuxingFortune.description || ''}}</text>
     </view>
 
     <!-- 其他信息 -->
-    <view class="card mt-md">
-      <view class="info-row">
-        <text class="info-label">冲煞</text>
-        <text class="info-val">{{huangli.chongsha || '-'}}</text>
+    <view class="card mt-md" style="border-color: {{currentTheme.border}};">
+      <view class="info-row" style="border-color: {{currentTheme.border}};">
+        <text class="info-label" style="color: {{currentTheme.subText}};">冲煞</text>
+        <text class="info-val" style="color: {{currentTheme.bodyText}};">{{huangli.chongsha || '-'}}</text>
       </view>
-      <view class="info-row">
-        <text class="info-label">吉神方位</text>
-        <text class="info-val">{{huangli.luckyDirection ? huangli.luckyDirection.join('、') : '-'}}</text>
+      <view class="info-row" style="border-color: {{currentTheme.border}};">
+        <text class="info-label" style="color: {{currentTheme.subText}};">吉神方位</text>
+        <text class="info-val" style="color: {{currentTheme.bodyText}};">{{huangli.luckyDirection ? huangli.luckyDirection.join('、') : '-'}}</text>
       </view>
-      <view class="info-row">
-        <text class="info-label">胎神</text>
-        <text class="info-val">{{huangli.taishen || '-'}}</text>
+      <view class="info-row" style="border-color: {{currentTheme.border}};">
+        <text class="info-label" style="color: {{currentTheme.subText}};">胎神</text>
+        <text class="info-val" style="color: {{currentTheme.bodyText}};">{{huangli.taishen || '-'}}</text>
       </view>
     </view>
 
     <view class="disclaimer mt-md">
-      <text>命理分析仅供参考，人生在于自身的努力和选择。</text>
+      <text style="color: {{currentTheme.mutedText}};">命理分析仅供参考，人生在于自身的努力和选择。</text>
     </view>
   </block>
 </view>

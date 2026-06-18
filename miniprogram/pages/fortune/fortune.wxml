@@ -1,80 +1,80 @@
-<view class="container">
+<view class="container" style="background: {{currentTheme.bg}}; min-height: 100vh;">
   <view wx:if="{{loading}}" class="loading-wrap">
-    <text class="loading-text">加载中...</text>
+    <text class="loading-text" style="color: {{currentTheme.subText}};">加载中...</text>
   </view>
 
   <block wx:if="{{!loading && bazi}}">
     <!-- 标题 -->
-    <view class="title-primary mt-md">八字命盘</view>
-    <text class="text-sub mt-sm">
+    <view class="title-primary mt-md" style="color: {{currentTheme.primary}};">八字命盘</view>
+    <text class="text-sub mt-sm" style="color: {{currentTheme.subText}};">
       {{bazi.birthYear}}年{{bazi.birthMonth}}月{{bazi.birthDay}}日 · {{bazi.gender}}
     </text>
 
     <!-- 四柱八字表 -->
     <view class="mt-lg" style="width:100%">
-      <bazi-chart pillars="{{pillars}}" />
+      <bazi-chart pillars="{{pillars}}" currentTheme="{{currentTheme}}" />
     </view>
 
     <!-- 日主 & 格局 -->
-    <view class="info-card mt-md">
-      <view class="info-row">
-        <text class="info-label">日主</text>
-        <text class="info-val day-master">{{bazi.dayMaster}}</text>
+    <view class="info-card mt-md" style="border-color: {{currentTheme.border}}; background: {{currentTheme.cardBg}};">
+      <view class="info-row" style="border-color: {{currentTheme.border}};">
+        <text class="info-label" style="color: {{currentTheme.subText}};">日主</text>
+        <text class="info-val day-master" style="color: {{currentTheme.primary}};">{{bazi.dayMaster}}</text>
       </view>
-      <view class="info-row">
-        <text class="info-label">旺衰</text>
-        <text class="info-val">{{bazi.strength.strength || ''}}</text>
+      <view class="info-row" style="border-color: {{currentTheme.border}};">
+        <text class="info-label" style="color: {{currentTheme.subText}};">旺衰</text>
+        <text class="info-val" style="color: {{currentTheme.bodyText}};">{{bazi.strength.strength || ''}}</text>
       </view>
-      <view class="info-row">
-        <text class="info-label">格局</text>
-        <text class="info-val">{{bazi.pattern || ''}}</text>
+      <view class="info-row" style="border-color: {{currentTheme.border}};">
+        <text class="info-label" style="color: {{currentTheme.subText}};">格局</text>
+        <text class="info-val" style="color: {{currentTheme.bodyText}};">{{bazi.pattern || ''}}</text>
       </view>
     </view>
 
     <!-- 大运 -->
     <view class="mt-md" style="width:100%">
-      <dayun-table dayun="{{bazi.dayun}}" currentAge="{{currentAge}}" />
+      <dayun-table dayun="{{bazi.dayun}}" currentAge="{{currentAge}}" currentTheme="{{currentTheme}}" />
     </view>
 
     <!-- 五行 -->
     <view class="mt-md" style="width:100%">
-      <wuxing-chart wuxingCount="{{bazi.wuxingCount}}" xiyong="{{bazi.xiyong}}" />
+      <wuxing-chart wuxingCount="{{bazi.wuxingCount}}" xiyong="{{bazi.xiyong}}" currentTheme="{{currentTheme}}" />
     </view>
 
     <!-- 神煞 -->
-    <view class="info-card mt-md" wx:if="{{bazi.shensha}}">
-      <view class="card-title">神煞</view>
+    <view class="info-card mt-md" style="border-color: {{currentTheme.border}}; background: {{currentTheme.cardBg}};" wx:if="{{bazi.shensha}}">
+      <view class="card-title" style="color: {{currentTheme.primary}};">神煞</view>
       <view class="shensha-row" wx:if="{{bazi.shensha.tianyi}}">
-        <text class="ss-label">天乙贵人</text>
-        <text wx:for="{{bazi.shensha.tianyi}}" wx:key="*this">{{item}} </text>
+        <text class="ss-label" style="color: {{currentTheme.accent}};">天乙贵人</text>
+        <text wx:for="{{bazi.shensha.tianyi}}" wx:key="*this" style="color: {{currentTheme.bodyText}};">{{item}} </text>
       </view>
       <view class="shensha-row" wx:if="{{bazi.shensha.wenchang}}">
-        <text class="ss-label">文昌贵人</text>
-        <text>{{bazi.shensha.wenchang}}</text>
+        <text class="ss-label" style="color: {{currentTheme.accent}};">文昌贵人</text>
+        <text style="color: {{currentTheme.bodyText}};">{{bazi.shensha.wenchang}}</text>
       </view>
       <view class="shensha-row" wx:if="{{bazi.shensha.yima}}">
-        <text class="ss-label">驿马</text>
-        <text>{{bazi.shensha.yima}}</text>
+        <text class="ss-label" style="color: {{currentTheme.accent}};">驿马</text>
+        <text style="color: {{currentTheme.bodyText}};">{{bazi.shensha.yima}}</text>
       </view>
       <view class="shensha-row" wx:if="{{bazi.shensha.taohua}}">
-        <text class="ss-label">桃花</text>
-        <text>{{bazi.shensha.taohua}}</text>
+        <text class="ss-label" style="color: {{currentTheme.accent}};">桃花</text>
+        <text style="color: {{currentTheme.bodyText}};">{{bazi.shensha.taohua}}</text>
       </view>
     </view>
 
     <!-- 分析摘要 -->
-    <view class="analysis-card mt-md">
-      <view class="card-title">命理简析</view>
+    <view class="analysis-card mt-md" style="border-color: {{currentTheme.border}}; background: {{currentTheme.cardGradient}};">
+      <view class="card-title" style="color: {{currentTheme.primary}};">命理简析</view>
       <view class="analysis-text">
-        <text>{{analysisText}}</text>
-        <text class="disclaimer">\n命理分析仅供文化参考，人生在于自身的努力和选择。</text>
+        <text style="color: {{currentTheme.subText}};">{{analysisText}}</text>
+        <text class="disclaimer" style="color: {{currentTheme.mutedText}};">\n命理分析仅供文化参考，人生在于自身的努力和选择。</text>
       </view>
     </view>
 
     <!-- 按钮 -->
     <view class="btn-row mt-lg mb-md">
-      <button class="btn-primary" bindtap="goToHuangli">查看专属黄历</button>
-      <button class="btn-outline" bindtap="goHome">返回首页</button>
+      <button class="btn-primary" style="background: {{currentTheme.gradient}}; color: {{currentTheme.btnText}};" bindtap="goToHuangli">查看专属黄历</button>
+      <button class="btn-outline" style="border-color: {{currentTheme.primary}}; color: {{currentTheme.primary}};" bindtap="goHome">返回首页</button>
     </view>
   </block>
 </view>

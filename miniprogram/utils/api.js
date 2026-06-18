@@ -1,5 +1,13 @@
 // 云函数调用封装
 
+// 判断是否为可重试错误（超时、网络、冷启动）
+function isRetriableError(err) {
+  var msg = (err.errMsg || err.message || '').toLowerCase();
+  return msg.indexOf('timeout') !== -1 || msg.indexOf('time out') !== -1 ||
+         msg.indexOf('network') !== -1 ||
+         msg.indexOf('functions execute fail') !== -1;
+}
+
 // 错误码映射
 function parseError(err) {
   var msg = (err.errMsg || err.message || '').toLowerCase();
@@ -26,6 +34,9 @@ function parseError(err) {
   return '请求失败: ' + (err.errMsg || err.message || '未知错误');
 }
 
+var MAX_RETRIES = 2;
+var RETRY_DELAY = 1000; // ms
+
 function callFunction(name, data, options) {
   options = options || {};
   var showLoading = options.showLoading !== false;
@@ -34,22 +45,35 @@ function callFunction(name, data, options) {
     wx.showLoading({ title: loadingTitle || '加载中...', mask: true });
   }
   console.log('[API] Calling', name, data);
-  return wx.cloud.callFunction({ name: name, data: data })
-    .then(function(res) {
-      if (showLoading) wx.hideLoading();
-      console.log('[API]', name, 'success');
-      return res.result;
-    })
-    .catch(function(err) {
-      if (showLoading) wx.hideLoading();
-      var errMsg = parseError(err);
-      wx.showModal({
-        title: '请求异常',
-        content: errMsg,
-        showCancel: false
+
+  function attempt(remainingRetries) {
+    return wx.cloud.callFunction({ name: name, data: data })
+      .then(function(res) {
+        if (showLoading) wx.hideLoading();
+        console.log('[API]', name, 'success');
+        return res.result;
+      })
+      .catch(function(err) {
+        if (remainingRetries > 0 && isRetriableError(err)) {
+          console.log('[API]', name, 'retrying, attempts left:', remainingRetries);
+          return new Promise(function(resolve) {
+            setTimeout(function() {
+              resolve(attempt(remainingRetries - 1));
+            }, RETRY_DELAY * (MAX_RETRIES - remainingRetries + 1));
+          });
+        }
+        if (showLoading) wx.hideLoading();
+        var errMsg = parseError(err);
+        wx.showModal({
+          title: '请求异常',
+          content: errMsg,
+          showCancel: false
+        });
+        throw err;
       });
-      throw err;
-    });
+  }
+
+  return attempt(MAX_RETRIES);
 }
 
 function getUserProfile() {
@@ -74,12 +98,54 @@ function getBaziRecord() {
   return callFunction('baziFunctions', { type: 'getBaziRecord' }, { showLoading: false });
 }
 
-function getTodayHuangli(year, month, day) {
-  return callFunction('huangliFunctions', { type: 'getTodayHuangli', year: year, month: month, day: day }, { showLoading: false });
+function getTodayHuangli(year, month, day, baziId) {
+  var data = { type: 'getTodayHuangli', year: year, month: month, day: day };
+  if (baziId) data.baziId = baziId;
+  return callFunction('huangliFunctions', data, { showLoading: false });
 }
 
-function getMonthHuangli(year, month) {
-  return callFunction('huangliFunctions', { type: 'getMonthHuangli', year: year, month: month }, { loadingTitle: '加载黄历...' });
+function getMonthHuangli(year, month, baziId) {
+  var data = { type: 'getMonthHuangli', year: year, month: month };
+  if (baziId) data.baziId = baziId;
+  return callFunction('huangliFunctions', data, { loadingTitle: '加载黄历...' });
+}
+
+function listBaziRecords(page, pageSize) {
+  return callFunction('baziFunctions', {
+    type: 'listBaziRecords',
+    page: page || 1,
+    pageSize: pageSize || 20
+  }, { showLoading: false });
+}
+
+function deleteBaziRecord(baziId) {
+  return callFunction('baziFunctions', {
+    type: 'deleteBaziRecord',
+    baziId: baziId
+  }, { loadingTitle: '删除中...' });
+}
+
+function setActiveBazi(baziId) {
+  return callFunction('userFunctions', {
+    type: 'setActiveBazi',
+    baziId: baziId || ''
+  }, { showLoading: false });
+}
+
+function updateBaziRecord(baziId, data) {
+  data.type = 'updateBazi';
+  data.baziId = baziId;
+  return callFunction('baziFunctions', data, { loadingTitle: '更新排盘...' });
+}
+
+function preGenerateHuangli(baziId, year, month, numMonths) {
+  return callFunction('huangliFunctions', {
+    type: 'preGenerateHuangli',
+    baziId: baziId,
+    year: year,
+    month: month,
+    numMonths: numMonths || 1
+  }, { showLoading: false });
 }
 
 module.exports = {
@@ -90,5 +156,10 @@ module.exports = {
   calculateBazi: calculateBazi,
   getBaziRecord: getBaziRecord,
   getTodayHuangli: getTodayHuangli,
-  getMonthHuangli: getMonthHuangli
+  getMonthHuangli: getMonthHuangli,
+  listBaziRecords: listBaziRecords,
+  deleteBaziRecord: deleteBaziRecord,
+  setActiveBazi: setActiveBazi,
+  preGenerateHuangli: preGenerateHuangli,
+  updateBaziRecord: updateBaziRecord
 };

@@ -2,7 +2,8 @@ Component({
   properties: {
     score: { type: Number, value: 50 },
     level: { type: String, value: '平' },
-    size: { type: String, value: 'normal' } // 'small' | 'normal' | 'large'
+    size: { type: String, value: 'normal' },
+    currentTheme: { type: Object, value: null }
   },
 
   data: {

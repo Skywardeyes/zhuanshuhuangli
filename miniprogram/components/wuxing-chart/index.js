@@ -1,13 +1,8 @@
 Component({
   properties: {
-    wuxingCount: {
-      type: Object,
-      value: {}
-    },
-    xiyong: {
-      type: Object,
-      value: { xiyong: [], jishen: [] }
-    }
+    wuxingCount: { type: Object, value: {} },
+    xiyong: { type: Object, value: { xiyong: [], jishen: [] } },
+    currentTheme: { type: Object, value: null }
   },
 
   data: {

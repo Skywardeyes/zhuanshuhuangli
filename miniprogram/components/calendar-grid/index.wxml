@@ -1,7 +1,7 @@
 <view class="cal-wrap">
   <!-- 周标题 -->
   <view class="cal-week">
-    <text class="cal-week-cell" wx:for="{{weekDays}}" wx:key="*this">{{item}}</text>
+    <text class="cal-week-cell" style="color: {{currentTheme.subText}};" wx:for="{{weekDays}}" wx:key="*this">{{item}}</text>
   </view>
 
   <!-- 日期网格 -->
@@ -10,11 +10,12 @@
       wx:for="{{calendarDays}}"
       wx:key="index"
       class="cal-cell {{item.empty ? 'empty' : ''}} {{item.isToday ? 'today' : ''}}"
+      style="{{item.isToday ? 'background: ' + currentTheme.highlight + '; border-color: ' + currentTheme.primary : ''}}"
       data-day="{{item.day}}"
       data-empty="{{item.empty}}"
       bindtap="onDayTap"
     >
-      <text class="cal-day" wx:if="{{!item.empty}}">{{item.day}}</text>
+      <text class="cal-day" style="{{!item.empty ? 'color: ' + currentTheme.bodyText : ''}}" wx:if="{{!item.empty}}">{{item.day}}</text>
       <!-- 运势小圆点 -->
       <view wx:if="{{!item.empty && item.fortuneLevel}}" class="cal-dot {{item.fortuneLevel === '大吉' || item.fortuneLevel === '吉' ? 'good' : item.fortuneLevel === '凶' || item.fortuneLevel === '大凶' ? 'bad' : ''}}"></view>
     </view>

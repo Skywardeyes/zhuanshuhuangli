@@ -1,4 +1,4 @@
-page { background: #FFF8DC; }
+/* page bg handled by inline style on .container */
 .container { padding: 30rpx; }
 
 /* 欢迎页 */

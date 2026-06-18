@@ -1,85 +1,172 @@
-<view class="container">
+<view class="container" style="background: {{currentTheme.bg}}; min-height: 100vh;">
+  <!-- ===== 编辑模式：单页全字段 ===== -->
+  <block wx:if="{{isEditing}}">
+    <view class="edit-title" style="color: {{currentTheme.primary}};">修改八字信息</view>
+
+    <!-- 性别 -->
+    <view class="edit-section">
+      <view class="edit-label" style="color: {{currentTheme.bodyText}};">性别</view>
+      <view class="gender-row">
+        <view class="gender-card {{gender === '男' ? 'selected' : ''}}" style="{{gender === '男' ? 'border-color: ' + currentTheme.primary + '; background: ' + currentTheme.highlight : ''}}" data-gender="男" bindtap="selectGender">
+          <text class="gender-symbol" style="color: {{currentTheme.primary}};">♂</text><text style="color: {{currentTheme.bodyText}};">男</text>
+        </view>
+        <view class="gender-card {{gender === '女' ? 'selected' : ''}}" style="{{gender === '女' ? 'border-color: ' + currentTheme.primary + '; background: ' + currentTheme.highlight : ''}}" data-gender="女" bindtap="selectGender">
+          <text class="gender-symbol" style="color: {{currentTheme.primary}};">♀</text><text style="color: {{currentTheme.bodyText}};">女</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 日历类型 + 日期 -->
+    <view class="edit-section">
+      <view class="edit-label" style="color: {{currentTheme.bodyText}};">生日</view>
+      <view class="calendar-toggle" bindtap="toggleCalendarType">
+        <text class="{{calendarType === 'solar' ? 'active' : ''}}" style="color: {{calendarType === 'solar' ? currentTheme.primary : currentTheme.subText}};">阳历</text>
+        <view class="toggle-box" style="background: {{currentTheme.border}};"><view class="toggle-dot {{calendarType === 'lunar' ? 'right' : ''}}" style="background: {{currentTheme.primary}};"></view></view>
+        <text class="{{calendarType === 'lunar' ? 'active' : ''}}" style="color: {{calendarType === 'lunar' ? currentTheme.primary : currentTheme.subText}};">农历</text>
+      </view>
+      <picker mode="date" value="{{birthday}}" start="1900-01-01" bindchange="onDateChange">
+        <view class="date-picker mt-sm" style="border-color: {{currentTheme.border}};">
+          <text class="{{birthday ? '' : 'placeholder'}}" style="color: {{birthday ? currentTheme.bodyText : currentTheme.mutedText}};">{{birthday || '点击选择日期'}}</text>
+          <text class="arrow" style="color: {{currentTheme.subText}};">▼</text>
+        </view>
+      </picker>
+    </view>
+
+    <!-- 时辰 -->
+    <view class="edit-section">
+      <view class="edit-label" style="color: {{currentTheme.bodyText}};">出生时辰</view>
+      <view class="shichen-grid-compact">
+        <view
+          wx:for="{{shichenOptions}}"
+          wx:key="value"
+          data-index="{{index}}"
+          class="shichen-chip {{shichen === item.value ? 'selected' : ''}}"
+          style="{{shichen === item.value ? 'border-color: ' + currentTheme.primary + '; background: ' + currentTheme.highlight + '; color: ' + currentTheme.primary : 'color: ' + currentTheme.bodyText}}"
+          bindtap="onShichenSelect"
+        >{{item.value}}时</view>
+      </view>
+    </view>
+
+    <!-- 出生地 -->
+    <view class="edit-section">
+      <view class="edit-label" style="color: {{currentTheme.bodyText}};">出生地</view>
+      <picker mode="region" bindchange="onRegionChange">
+        <view class="date-picker" style="border-color: {{currentTheme.border}};">
+          <text class="{{birthplace ? '' : 'placeholder'}}" style="color: {{birthplace ? currentTheme.bodyText : currentTheme.mutedText}};">{{birthplace || '点击选择省/市'}}</text>
+          <text class="arrow" style="color: {{currentTheme.subText}};">▼</text>
+        </view>
+      </picker>
+    </view>
+
+    <!-- 名称 -->
+    <view class="edit-section">
+      <view class="edit-label" style="color: {{currentTheme.bodyText}};">八字名称</view>
+      <input class="edit-name-input" style="border-color: {{currentTheme.border}}; color: {{currentTheme.bodyText}};" placeholder="如：我的八字、小明" value="{{baziName}}" bindinput="onNameInput" maxlength="20" />
+    </view>
+
+    <!-- 错误 -->
+    <view class="error-msg" wx:if="{{errorMsg}}" style="color: {{currentTheme.jiColor}};">{{errorMsg}}</view>
+
+    <!-- 按钮 -->
+    <view class="btn-row mt-lg">
+      <button class="btn-outline" style="border-color: {{currentTheme.primary}}; color: {{currentTheme.primary}};" bindtap="goBack">取消</button>
+      <button class="btn-primary" style="background: {{currentTheme.gradient}}; color: {{currentTheme.btnText}};" bindtap="submitEdit" disabled="{{submitting}}">
+        {{submitting ? '计算中...' : '保存修改'}}
+      </button>
+    </view>
+  </block>
+
+  <!-- ===== 新建模式：分步向导 ===== -->
+  <block wx:if="{{!isEditing}}">
   <!-- 进度条 -->
   <view class="progress-wrap">
-    <view class="progress-bar">
-      <view class="progress-fill" style="width: {{step / totalSteps * 100}}%"></view>
+    <view class="progress-bar" style="background: {{currentTheme.border}};">
+      <view class="progress-fill" style="width: {{step / totalSteps * 100}}%; background: {{currentTheme.gradient}};"></view>
     </view>
-    <text class="step-text">{{step}}/{{totalSteps}}</text>
+    <text class="step-text" style="color: {{currentTheme.subText}};">{{step}}/{{totalSteps}}</text>
   </view>
 
   <!-- Step 1: 性别 -->
   <view class="step-content" wx:if="{{step === 1}}">
-    <view class="title-primary">您的性别是？</view>
-    <view class="sub-title">性别决定大运顺逆排列</view>
+    <view class="title-primary" style="color: {{currentTheme.primary}};">您的性别是？</view>
+    <view class="sub-title" style="color: {{currentTheme.subText}};">性别决定大运顺逆排列</view>
     <view class="gender-row mt-lg">
-      <view class="gender-card {{gender === '男' ? 'selected' : ''}}" data-gender="男" bindtap="selectGender">
-        <text class="gender-symbol">♂</text>
-        <text>男</text>
+      <view class="gender-card {{gender === '男' ? 'selected' : ''}}" style="{{gender === '男' ? 'border-color: ' + currentTheme.primary + '; background: ' + currentTheme.highlight : ''}}" data-gender="男" bindtap="selectGender">
+        <text class="gender-symbol" style="color: {{currentTheme.primary}};">♂</text>
+        <text style="color: {{currentTheme.bodyText}};">男</text>
       </view>
-      <view class="gender-card {{gender === '女' ? 'selected' : ''}}" data-gender="女" bindtap="selectGender">
-        <text class="gender-symbol">♀</text>
-        <text>女</text>
+      <view class="gender-card {{gender === '女' ? 'selected' : ''}}" style="{{gender === '女' ? 'border-color: ' + currentTheme.primary + '; background: ' + currentTheme.highlight : ''}}" data-gender="女" bindtap="selectGender">
+        <text class="gender-symbol" style="color: {{currentTheme.primary}};">♀</text>
+        <text style="color: {{currentTheme.bodyText}};">女</text>
       </view>
     </view>
   </view>
 
   <!-- Step 2: 生日 -->
   <view class="step-content" wx:if="{{step === 2}}">
-    <view class="title-primary">您的生日是？</view>
+    <view class="title-primary" style="color: {{currentTheme.primary}};">您的生日是？</view>
     <view class="calendar-toggle mt-md" bindtap="toggleCalendarType">
-      <text class="{{calendarType === 'solar' ? 'active' : ''}}">阳历</text>
-      <view class="toggle-box"><view class="toggle-dot {{calendarType === 'lunar' ? 'right' : ''}}"></view></view>
-      <text class="{{calendarType === 'lunar' ? 'active' : ''}}">农历</text>
+      <text class="{{calendarType === 'solar' ? 'active' : ''}}" style="color: {{calendarType === 'solar' ? currentTheme.primary : currentTheme.subText}};">阳历</text>
+      <view class="toggle-box" style="background: {{currentTheme.border}};"><view class="toggle-dot {{calendarType === 'lunar' ? 'right' : ''}}" style="background: {{currentTheme.primary}};"></view></view>
+      <text class="{{calendarType === 'lunar' ? 'active' : ''}}" style="color: {{calendarType === 'lunar' ? currentTheme.primary : currentTheme.subText}};">农历</text>
     </view>
     <picker mode="date" value="{{birthday}}" start="1900-01-01" bindchange="onDateChange">
-      <view class="date-picker mt-lg">
-        <text class="{{birthday ? '' : 'placeholder'}}">{{birthday || '点击选择日期'}}</text>
-        <text class="arrow">▼</text>
+      <view class="date-picker mt-lg" style="border-color: {{currentTheme.border}};">
+        <text class="{{birthday ? '' : 'placeholder'}}" style="color: {{birthday ? currentTheme.bodyText : currentTheme.mutedText}};">{{birthday || '点击选择日期'}}</text>
+        <text class="arrow" style="color: {{currentTheme.subText}};">▼</text>
       </view>
     </picker>
   </view>
 
   <!-- Step 3: 时辰 -->
   <view class="step-content" wx:if="{{step === 3}}">
-    <view class="title-primary">出生时辰是？</view>
-    <view class="sub-title">不确定可跳过</view>
+    <view class="title-primary" style="color: {{currentTheme.primary}};">出生时辰是？</view>
+    <view class="sub-title" style="color: {{currentTheme.subText}};">不确定可跳过</view>
     <view class="shichen-grid mt-lg">
       <view
         wx:for="{{shichenOptions}}"
         wx:key="value"
         data-index="{{index}}"
         class="shichen-item {{shichen === item.value ? 'selected' : ''}}"
+        style="{{shichen === item.value ? 'border-color: ' + currentTheme.primary + '; background: ' + currentTheme.highlight : ''}}"
         bindtap="onShichenSelect"
       >
-        <text class="shi-name">{{item.value}}时</text>
-        <text class="shi-time">({{item.label.split('(')[1].replace(')', '')}})</text>
+        <text class="shi-name" style="color: {{shichen === item.value ? currentTheme.primary : currentTheme.bodyText}};">{{item.value}}时</text>
+        <text class="shi-time" style="color: {{currentTheme.subText}};">({{item.label.split('(')[1].replace(')', '')}})</text>
       </view>
     </view>
     <view class="skip-row mt-md" bindtap="skipShichen">
-      <text class="skip-text">不确定，跳过 →</text>
+      <text class="skip-text" style="color: {{currentTheme.primary}};">不确定，跳过 →</text>
     </view>
   </view>
 
   <!-- Step 4: 出生地 -->
   <view class="step-content" wx:if="{{step === 4}}">
-    <view class="title-primary">出生地是？</view>
-    <view class="sub-title">用于真太阳时校正</view>
+    <view class="title-primary" style="color: {{currentTheme.primary}};">出生地是？</view>
+    <view class="sub-title" style="color: {{currentTheme.subText}};">用于真太阳时校正</view>
     <picker mode="region" bindchange="onRegionChange">
-      <view class="date-picker mt-lg">
-        <text class="{{birthplace ? '' : 'placeholder'}}">{{birthplace || '点击选择省/市'}}</text>
-        <text class="arrow">▼</text>
+      <view class="date-picker mt-lg" style="border-color: {{currentTheme.border}};">
+        <text class="{{birthplace ? '' : 'placeholder'}}" style="color: {{birthplace ? currentTheme.bodyText : currentTheme.mutedText}};">{{birthplace || '点击选择省/市'}}</text>
+        <text class="arrow" style="color: {{currentTheme.subText}};">▼</text>
       </view>
     </picker>
+
+    <!-- 八字名称 -->
+    <view class="name-section mt-lg">
+      <view class="sub-title" style="color: {{currentTheme.subText}};">给这个八字起个名字（可选）</view>
+      <input class="name-input" style="border-color: {{currentTheme.border}}; color: {{currentTheme.bodyText}};" placeholder="如：我的八字、小明" value="{{baziName}}" bindinput="onNameInput" maxlength="20" />
+    </view>
   </view>
 
   <!-- 错误 -->
-  <view class="error-msg" wx:if="{{errorMsg}}">{{errorMsg}}</view>
+  <view class="error-msg" wx:if="{{errorMsg}}" style="color: {{currentTheme.jiColor}};">{{errorMsg}}</view>
 
   <!-- 按钮 -->
   <view class="btn-row">
-    <button class="btn-outline" wx:if="{{step > 1}}" bindtap="prevStep">上一步</button>
-    <button class="btn-primary" bindtap="nextStep" disabled="{{submitting}}">
+    <button class="btn-outline" style="border-color: {{currentTheme.primary}}; color: {{currentTheme.primary}};" wx:if="{{step > 1}}" bindtap="prevStep">上一步</button>
+    <button class="btn-primary" style="background: {{currentTheme.gradient}}; color: {{currentTheme.btnText}};" bindtap="nextStep" disabled="{{submitting}}">
       {{submitting ? '计算中...' : (step === totalSteps ? '开始排盘' : '下一步')}}
     </button>
   </view>
+  </block>
 </view>

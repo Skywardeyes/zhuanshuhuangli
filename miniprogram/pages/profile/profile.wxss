@@ -1,4 +1,4 @@
-page { background: #FFF8DC; }
+/* page bg handled by inline style on .container */
 .container { padding: 30rpx; }
 
 .profile-header {
@@ -7,21 +7,28 @@ page { background: #FFF8DC; }
   align-items: center;
   padding: 40rpx 0;
 }
-.avatar {
-  width: 120rpx;
-  height: 120rpx;
-  background: linear-gradient(135deg, #C41E1E, #8B0000);
+.avatar-btn {
+  width: 120rpx; height: 120rpx;
+  padding: 0; margin: 0;
+  background: transparent;
+  border: none;
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 56rpx;
-  margin-bottom: 16rpx;
+  overflow: hidden;
 }
-.nickname {
-  font-size: 32rpx;
-  color: #333;
-  font-weight: bold;
+.avatar-btn::after { border: none; }
+.avatar-img {
+  width: 120rpx; height: 120rpx;
+  border-radius: 50%;
+  border: 4rpx solid #C41E1E;
+}
+.nickname-input {
+  font-size: 32rpx; color: #333; font-weight: bold;
+  text-align: center; margin-top: 16rpx;
+  height: 60rpx; line-height: 60rpx;
+  width: 400rpx;
+}
+.profile-id {
+  font-size: 24rpx; color: #ccc; margin-top: 6rpx;
 }
 
 /* 卡片 */
@@ -59,6 +66,23 @@ page { background: #FFF8DC; }
   border-top: 1rpx solid #F5F0EB;
 }
 
+/* 八字管理列表 */
+.bazi-manage-item {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 20rpx 0; border-bottom: 1rpx solid #F5F0EB;
+}
+.bazi-manage-item:last-child { border-bottom: none; }
+.bazi-manage-item.active { background: #FFFBF5; margin: 0 -28rpx; padding: 20rpx 28rpx; border-radius: 8rpx; }
+.bazi-manage-left { flex: 1; display: flex; flex-direction: column; gap: 4rpx; }
+.bazi-manage-name { font-size: 30rpx; color: #333; font-weight: bold; }
+.bazi-manage-date { font-size: 24rpx; color: #999; }
+.bazi-manage-master { font-size: 22rpx; color: #B8860B; }
+.bazi-manage-actions { display: flex; gap: 16rpx; }
+.action-edit { color: #666; font-size: 24rpx; padding: 8rpx; }
+.action-gen { color: #B8860B; font-size: 24rpx; padding: 8rpx; }
+.action-del { color: #C41E1E; font-size: 26rpx; padding: 8rpx; }
+
 /* 八字摘要 */
 .bazi-summary { text-align: center; }
 .bazi-text {
@@ -85,4 +109,114 @@ page { background: #FFF8DC; }
 .disclaimer {
   color: #ccc !important;
   font-size: 24rpx !important;
+}
+
+/* 预生成进度条 */
+.gen-progress {
+  flex-basis: 100%;
+  padding-top: 10rpx;
+}
+.gen-progress-bar {
+  width: 100%;
+  height: 10rpx;
+  background: #F0E6D3;
+  border-radius: 5rpx;
+  overflow: hidden;
+}
+.gen-progress-fill {
+  height: 100%;
+  background: linear-gradient(to right, #B8860B, #C41E1E);
+  border-radius: 5rpx;
+  transition: width 0.3s ease;
+}
+.gen-progress-text {
+  font-size: 20rpx;
+  color: #B8860B;
+  margin-top: 6rpx;
+  display: block;
+}
+
+/* 日期范围弹窗 */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 500;
+}
+.date-modal {
+  position: fixed;
+  top: 30%;
+  left: 40rpx;
+  right: 40rpx;
+  background: #fff;
+  border-radius: 20rpx;
+  z-index: 510;
+  box-shadow: 0 12rpx 40rpx rgba(0,0,0,0.2);
+}
+.date-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28rpx 32rpx 16rpx;
+}
+.date-modal-title {
+  font-family: 'Songti SC', serif;
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #C41E1E;
+}
+.date-modal-close {
+  font-size: 32rpx;
+  color: #999;
+  padding: 8rpx;
+}
+.date-modal-body {
+  padding: 16rpx 32rpx 28rpx;
+}
+.date-picker-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #F5F0EB;
+}
+.date-picker-row:last-child {
+  border-bottom: none;
+}
+.date-picker-label {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: bold;
+}
+.date-picker-value {
+  font-size: 28rpx;
+  color: #B8860B;
+  padding: 10rpx 24rpx;
+  background: #FFFBF5;
+  border-radius: 8rpx;
+  border: 1rpx solid #E0D5C0;
+}
+.date-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 20rpx;
+  padding: 16rpx 32rpx 28rpx;
+}
+.btn-outline-sm {
+  padding: 16rpx 36rpx;
+  font-size: 28rpx;
+  color: #999;
+  background: #fff;
+  border: 1rpx solid #E0D5C0;
+  border-radius: 32rpx;
+  line-height: 1;
+}
+.btn-primary-sm {
+  padding: 16rpx 36rpx;
+  font-size: 28rpx;
+  color: #fff;
+  background: #C41E1E;
+  border: none;
+  border-radius: 32rpx;
+  line-height: 1;
 }

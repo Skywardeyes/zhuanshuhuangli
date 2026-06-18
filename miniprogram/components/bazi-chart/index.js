@@ -1,9 +1,7 @@
 Component({
   properties: {
-    pillars: {
-      type: Object,
-      value: {}
-    }
+    pillars: { type: Object, value: {} },
+    currentTheme: { type: Object, value: null }
   },
 
   data: {

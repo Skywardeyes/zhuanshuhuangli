@@ -16,15 +16,32 @@ Page({
 
   onLoad() {
     this.setData({ envId: app.globalData.env || '(未设置)' });
+    this.syncTheme();
     this.checkState();
     this.checkEnv();
   },
 
   onShow() {
+    this.syncTheme();
     this.checkState();
     if (app.globalData.hasBazi) {
       this.loadToday();
     }
+  },
+
+  syncTheme() {
+    var theme = app.globalData.currentTheme;
+    this.setData({ currentTheme: theme });
+    wx.setNavigationBarColor({
+      frontColor: '#ffffff',
+      backgroundColor: theme.navBg,
+      animation: { duration: 300, timingFunc: 'easeIn' }
+    });
+    wx.setBackgroundColor({
+      backgroundColor: theme.bg,
+      backgroundColorTop: theme.navBg,
+      backgroundColorBottom: theme.bg
+    });
   },
 
   // 检测云环境
@@ -54,16 +71,18 @@ Page({
   },
 
   async loadToday() {
-    const cached = cache.getCachedTodayHuangli();
+    const baziId = app.globalData.currentBaziId;
+
+    const cached = cache.getCachedTodayHuangli(baziId);
     if (cached) {
       this.setData({ todayHuangli: cached, loading: false });
     }
 
     try {
-      const result = await api.getTodayHuangli();
+      const result = await api.getTodayHuangli(null, null, null, baziId);
       if (result.success) {
         this.setData({ todayHuangli: result.huangli, loading: false });
-        cache.cacheTodayHuangli(result.huangli);
+        cache.cacheTodayHuangli(result.huangli, baziId);
       } else {
         this.setData({ loading: false });
         wx.showToast({ title: result.errMsg || '加载失败', icon: 'none' });

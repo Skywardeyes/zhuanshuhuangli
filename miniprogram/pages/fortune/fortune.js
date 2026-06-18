@@ -12,10 +12,33 @@ Page({
   },
 
   onLoad() {
-    const bazi = app.globalData.baziRecord;
+    this.syncTheme();
+    this.renderBazi();
+  },
+
+  onShow() {
+    this.syncTheme();
+    const bazi = app.globalData.currentBazi;
+    if (bazi && this.data.bazi && this.data.bazi._id !== bazi._id) {
+      this.renderBazi();
+    }
+  },
+
+  syncTheme() {
+    var theme = app.globalData.currentTheme;
+    this.setData({ currentTheme: theme });
+    wx.setNavigationBarColor({
+      frontColor: '#ffffff',
+      backgroundColor: theme.navBg,
+      animation: { duration: 300, timingFunc: 'easeIn' }
+    });
+  },
+
+  renderBazi() {
+    const bazi = app.globalData.currentBazi;
     if (!bazi) {
       wx.showToast({ title: '请先完成排盘', icon: 'none' });
-      setTimeout(() => wx.navigateBack(), 1500);
+      setTimeout(function () { wx.navigateBack(); }, 1500);
       return;
     }
 
@@ -42,11 +65,11 @@ Page({
     if (bazi.pattern) analysisText += '月令' + bazi.pattern + '，宜看格局成败高低。';
 
     this.setData({
-      bazi,
-      pillars,
+      bazi: bazi,
+      pillars: pillars,
       currentAge: age,
-      xiyongText,
-      analysisText,
+      xiyongText: xiyongText,
+      analysisText: analysisText,
       loading: false
     });
   },

@@ -1,0 +1,58 @@
+.bazi-switcher { position: relative; z-index: 100; }
+
+/* Trigger button */
+.switcher-trigger {
+  display: flex; align-items: center; gap: 8rpx;
+  padding: 8rpx 20rpx;
+  background: rgba(255,255,255,0.95);
+  border-radius: 32rpx;
+  border: 1rpx solid #E0D5C0;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.06);
+}
+.switcher-icon { font-size: 28rpx; color: #B8860B; }
+.switcher-name {
+  font-size: 26rpx; color: #C41E1E; font-weight: bold;
+  max-width: 180rpx; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.switcher-arrow { font-size: 20rpx; color: #999; }
+
+/* Dropdown overlay */
+.dropdown-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.35); z-index: 200;
+}
+
+/* Dropdown panel */
+.dropdown-panel {
+  position: fixed; top: 90rpx; left: 20rpx; right: 20rpx;
+  background: #fff; border-radius: 16rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0,0,0,0.18); z-index: 210;
+  max-height: 560rpx; display: flex; flex-direction: column;
+}
+
+.dropdown-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 24rpx 30rpx; border-bottom: 1rpx solid #F0E6D3;
+}
+.dropdown-title {
+  font-family: 'Songti SC', serif; font-size: 32rpx; color: #C41E1E; font-weight: bold;
+}
+.dropdown-close { font-size: 32rpx; color: #999; padding: 8rpx; }
+
+.dropdown-list { flex: 1; max-height: 380rpx; }
+
+.dropdown-item {
+  display: flex; align-items: center; padding: 22rpx 30rpx;
+  border-bottom: 1rpx solid #F5F0EB; gap: 16rpx;
+}
+.dropdown-item.active { background: #FFFBF5; }
+.item-name { font-size: 28rpx; color: #333; flex: 1; }
+.item-date { font-size: 22rpx; color: #999; }
+.item-check { color: #C41E1E; font-size: 28rpx; font-weight: bold; }
+
+.dropdown-footer {
+  display: flex; align-items: center; justify-content: center;
+  padding: 22rpx; border-top: 1rpx solid #F0E6D3; gap: 6rpx;
+}
+.footer-icon { font-size: 34rpx; color: #C41E1E; font-weight: bold; }
+.footer-text { font-size: 28rpx; color: #C41E1E; }

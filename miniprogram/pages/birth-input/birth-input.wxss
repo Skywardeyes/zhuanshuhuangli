@@ -1,5 +1,5 @@
+/* page bg handled by inline style on .container */
 page {
-  background: #FFF8DC;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -208,3 +208,85 @@ page {
   font-size: 28rpx;
   background: transparent;
 }
+
+/* 八字名称输入 */
+.name-section { margin-top: 30rpx; }
+.name-input {
+  margin-top: 16rpx;
+  border: 1rpx solid #E0D5C0;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  font-size: 28rpx;
+  background: #fff;
+}
+
+/* ===== 编辑模式样式 ===== */
+.edit-title {
+  font-family: 'Songti SC', serif;
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #C41E1E;
+  text-align: center;
+  margin-bottom: 40rpx;
+  width: 100%;
+}
+.edit-section {
+  width: 100%;
+  margin-bottom: 28rpx;
+}
+.edit-label {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 12rpx;
+}
+.edit-section .gender-row {
+  justify-content: flex-start;
+  gap: 24rpx;
+}
+.edit-section .gender-card {
+  width: 160rpx;
+  height: 120rpx;
+  font-size: 30rpx;
+}
+.edit-section .gender-symbol {
+  font-size: 48rpx;
+}
+.edit-section .calendar-toggle {
+  margin-bottom: 12rpx;
+}
+.edit-section .date-picker {
+  width: 100%;
+  box-sizing: border-box;
+}
+.shichen-grid-compact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+}
+.shichen-chip {
+  padding: 12rpx 24rpx;
+  background: #fff;
+  border: 2rpx solid #E0D5C0;
+  border-radius: 10rpx;
+  font-size: 26rpx;
+  color: #333;
+  transition: all 0.15s;
+}
+.shichen-chip.selected {
+  border-color: #C41E1E;
+  background: #FFF0F0;
+  color: #C41E1E;
+  font-weight: bold;
+}
+.edit-name-input {
+  border: 1rpx solid #E0D5C0;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  font-size: 28rpx;
+  background: #fff;
+  width: 100%;
+  box-sizing: border-box;
+}
+.edit-section .mt-sm { margin-top: 12rpx; }
+.btn-row.mt-lg { margin-top: 40rpx; }

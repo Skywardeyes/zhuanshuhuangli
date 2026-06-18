@@ -1,57 +1,142 @@
-<view class="container">
+<view class="container" style="background: {{currentTheme.bg}}; min-height: 100vh;">
   <!-- 头像昵称 -->
   <view class="profile-header">
-    <view class="avatar">☯</view>
-    <text class="nickname">专属黄历用户</text>
+    <button class="avatar-btn" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
+      <image class="avatar-img" src="{{avatarUrl || '/images/avatar.png'}}" mode="aspectFill" />
+    </button>
+    <input class="nickname-input" type="nickname" placeholder="点击设置昵称" value="{{nickName}}" bindinput="onNicknameInput" bindblur="onNicknameBlur" style="color: {{currentTheme.bodyText}};" />
+    <text class="profile-id" style="color: {{currentTheme.subText}};">专属黄历用户</text>
   </view>
 
-  <!-- 生辰信息 -->
-  <view class="card mt-md">
-    <view class="card-title">生辰信息</view>
+  <!-- 生辰信息（显示当前八字的信息） -->
+  <view class="card mt-md" style="border-color: {{currentTheme.border}};" wx:if="{{bazi}}">
+    <view class="card-title" style="color: {{currentTheme.primary}};">生辰信息</view>
     <view class="info-row">
-      <text class="info-label">性别</text>
-      <text class="info-val">{{user.gender || '未填写'}}</text>
+      <text class="info-label" style="color: {{currentTheme.subText}};">性别</text>
+      <text class="info-val" style="color: {{currentTheme.bodyText}};">{{bazi.gender || '未填写'}}</text>
     </view>
+    <view class="info-row" style="border-color: {{currentTheme.border}};">
+      <text class="info-label" style="color: {{currentTheme.subText}};">生日</text>
+      <text class="info-val" style="color: {{currentTheme.bodyText}};">{{bazi.birthSolar || (bazi.birthYear + '/' + bazi.birthMonth + '/' + bazi.birthDay) || '未填写'}}</text>
+    </view>
+    <view class="info-row" style="border-color: {{currentTheme.border}};">
+      <text class="info-label" style="color: {{currentTheme.subText}};">时辰</text>
+      <text class="info-val" style="color: {{currentTheme.bodyText}};">{{bazi.birthTime ? bazi.birthTime + '时' : '未知'}}</text>
+    </view>
+    <view class="info-row" style="border-color: {{currentTheme.border}};">
+      <text class="info-label" style="color: {{currentTheme.subText}};">出生地</text>
+      <text class="info-val" style="color: {{currentTheme.bodyText}};">{{bazi.birthplace || '未填写'}}</text>
+    </view>
+    <view class="edit-btn mt-md" style="border-color: {{currentTheme.primary}}; color: {{currentTheme.primary}};" bindtap="goToBazi">
+      <text>创建新八字</text>
+    </view>
+  </view>
+
+  <!-- 无八字时显示用户信息 -->
+  <view class="card mt-md" style="border-color: {{currentTheme.border}};" wx:if="{{!bazi}}">
+    <view class="card-title" style="color: {{currentTheme.primary}};">生辰信息</view>
     <view class="info-row">
-      <text class="info-label">生日</text>
-      <text class="info-val">{{user.birthSolar || user.birthLunar || '未填写'}}</text>
+      <text class="info-label" style="color: {{currentTheme.subText}};">性别</text>
+      <text class="info-val" style="color: {{currentTheme.bodyText}};">{{user.gender || '未填写'}}</text>
     </view>
-    <view class="info-row">
-      <text class="info-label">时辰</text>
-      <text class="info-val">{{user.birthTime ? user.birthTime + '时' : '未知'}}</text>
+    <view class="info-row" style="border-color: {{currentTheme.border}};">
+      <text class="info-label" style="color: {{currentTheme.subText}};">生日</text>
+      <text class="info-val" style="color: {{currentTheme.bodyText}};">{{user.birthSolar || user.birthLunar || '未填写'}}</text>
     </view>
-    <view class="info-row">
-      <text class="info-label">出生地</text>
-      <text class="info-val">{{user.birthplace || '未填写'}}</text>
+    <view class="info-row" style="border-color: {{currentTheme.border}};">
+      <text class="info-label" style="color: {{currentTheme.subText}};">时辰</text>
+      <text class="info-val" style="color: {{currentTheme.bodyText}};">{{user.birthTime ? user.birthTime + '时' : '未知'}}</text>
     </view>
-    <view class="edit-btn mt-md" bindtap="goToBazi">
-      <text>{{user.birthSolar || user.birthLunar ? '修改信息' : '填写生辰'}}</text>
+    <view class="info-row" style="border-color: {{currentTheme.border}};">
+      <text class="info-label" style="color: {{currentTheme.subText}};">出生地</text>
+      <text class="info-val" style="color: {{currentTheme.bodyText}};">{{user.birthplace || '未填写'}}</text>
+    </view>
+    <view class="edit-btn mt-md" style="border-color: {{currentTheme.primary}}; color: {{currentTheme.primary}};" bindtap="goToBazi">
+      <text>填写生辰</text>
+    </view>
+  </view>
+
+  <!-- 八字管理 -->
+  <view class="card mt-md" style="border-color: {{currentTheme.border}};" wx:if="{{baziList.length > 0}}">
+    <view class="card-title" style="color: {{currentTheme.primary}};">八字管理 ({{baziList.length}})</view>
+    <view
+      wx:for="{{baziList}}"
+      wx:key="_id"
+      class="bazi-manage-item {{item._id === activeBaziId ? 'active' : ''}}"
+      style="{{item._id === activeBaziId ? 'background: ' + currentTheme.highlight + '; border-color: ' + currentTheme.primary : ''}}"
+    >
+      <view class="bazi-manage-left" bindtap="switchBazi" data-id="{{item._id}}">
+        <text class="bazi-manage-name" style="color: {{item._id === activeBaziId ? currentTheme.primary : currentTheme.bodyText}};">{{item.name || ('八字' + (index + 1))}}</text>
+        <text class="bazi-manage-date" style="color: {{currentTheme.subText}};">{{item.birthYear}}/{{item.birthMonth}}/{{item.birthDay}} · {{item.gender}}</text>
+        <text class="bazi-manage-master" style="color: {{currentTheme.subText}};">日主{{item.dayMaster}} · {{item.strength ? item.strength.strength : ''}}</text>
+      </view>
+      <view class="bazi-manage-actions">
+        <text class="action-edit" style="color: {{currentTheme.subText}};" bindtap="editBazi" data-id="{{item._id}}">修改</text>
+        <text class="action-gen" style="color: {{currentTheme.primary}};" bindtap="onGenDateTap" data-id="{{item._id}}">预生成</text>
+        <text class="action-del" style="color: {{currentTheme.jiColor}};" bindtap="deleteBazi" data-id="{{item._id}}" data-name="{{item.name || ('八字' + (index + 1))}}">删除</text>
+      </view>
+      <view class="gen-progress" wx:if="{{item._generating}}">
+        <view class="gen-progress-bar" style="background: {{currentTheme.border}};">
+          <view class="gen-progress-fill" style="width: {{item._genPercentage}}%; background: {{currentTheme.gradient}};"></view>
+        </view>
+        <text class="gen-progress-text" style="color: {{currentTheme.subText}};">{{item._genCompleted}}/{{item._genTotal}}月 ({{item._genPercentage}}%)</text>
+      </view>
+    </view>
+    <view class="edit-btn mt-md" style="border-color: {{currentTheme.primary}}; color: {{currentTheme.primary}};" bindtap="goToBazi">
+      <text>+ 创建新八字</text>
     </view>
   </view>
 
   <!-- 八字摘要 -->
-  <view class="card mt-md" wx:if="{{bazi}}">
-    <view class="card-title">八字命盘</view>
+  <view class="card mt-md" style="border-color: {{currentTheme.border}};" wx:if="{{bazi}}">
+    <view class="card-title" style="color: {{currentTheme.primary}};">八字命盘</view>
     <view class="bazi-summary">
-      <text class="bazi-text">
+      <text class="bazi-text" style="color: {{currentTheme.bodyText}};">
         {{bazi.yearPillar.stem}}{{bazi.yearPillar.branch}}
         {{bazi.monthPillar.stem}}{{bazi.monthPillar.branch}}
         {{bazi.dayPillar.stem}}{{bazi.dayPillar.branch}}
         {{bazi.hourPillar ? bazi.hourPillar.stem + bazi.hourPillar.branch : '??'}}
       </text>
-      <text class="bazi-sub">日主{{bazi.dayMaster}} · {{bazi.strength ? bazi.strength.strength : ''}}</text>
+      <text class="bazi-sub" style="color: {{currentTheme.subText}};">日主{{bazi.dayMaster}} · {{bazi.strength ? bazi.strength.strength : ''}}</text>
     </view>
-    <view class="edit-btn mt-md" bindtap="goToFortune">
+    <view class="edit-btn mt-md" style="border-color: {{currentTheme.primary}}; color: {{currentTheme.primary}};" bindtap="goToFortune">
       <text>查看完整命盘</text>
     </view>
   </view>
 
   <!-- 关于 -->
-  <view class="card mt-md">
-    <view class="card-title">关于</view>
+  <view class="card mt-md" style="border-color: {{currentTheme.border}};">
+    <view class="card-title" style="color: {{currentTheme.primary}};">关于</view>
     <view class="about-text">
-      <text>专属黄历基于中国传统四柱八字命理学，参照《穷通宝典》《三命通会》《滴天髓》《渊海子平》《子平真诠》等经典典籍，为您提供个性化的每日运势参考。</text>
-      <text class="disclaimer mt-md">命理分析仅供文化研究参考，不构成决策依据。人生在于自身的努力和选择。</text>
+      <text style="color: {{currentTheme.subText}};">专属黄历基于中国传统四柱八字命理学，参照《穷通宝典》《三命通会》《滴天髓》《渊海子平》《子平真诠》等经典典籍，为您提供个性化的每日运势参考。</text>
+      <text class="disclaimer mt-md" style="color: {{currentTheme.mutedText}};">命理分析仅供文化研究参考，不构成决策依据。人生在于自身的努力和选择。</text>
+    </view>
+  </view>
+
+  <!-- 日期范围选择弹窗 -->
+  <view class="modal-overlay" wx:if="{{showDateModal}}" bindtap="closeDateModal"></view>
+  <view class="date-modal" wx:if="{{showDateModal}}" style="border-color: {{currentTheme.border}};">
+    <view class="date-modal-header" style="border-color: {{currentTheme.border}};">
+      <text class="date-modal-title" style="color: {{currentTheme.primary}};">选择预生成日期范围</text>
+      <text class="date-modal-close" style="color: {{currentTheme.subText}};" bindtap="closeDateModal">✕</text>
+    </view>
+    <view class="date-modal-body">
+      <view class="date-picker-row">
+        <text class="date-picker-label" style="color: {{currentTheme.subText}};">起始日期</text>
+        <picker mode="date" value="{{genStartDate}}" bindchange="onStartDateChange">
+          <view class="date-picker-value" style="color: {{currentTheme.bodyText}};">{{genStartDate || '请选择'}}</view>
+        </picker>
+      </view>
+      <view class="date-picker-row">
+        <text class="date-picker-label" style="color: {{currentTheme.subText}};">截止日期</text>
+        <picker mode="date" value="{{genEndDate}}" bindchange="onEndDateChange">
+          <view class="date-picker-value" style="color: {{currentTheme.bodyText}};">{{genEndDate || '请选择'}}</view>
+        </picker>
+      </view>
+    </view>
+    <view class="date-modal-footer">
+      <button class="btn-outline-sm" style="border-color: {{currentTheme.primary}}; color: {{currentTheme.primary}};" bindtap="closeDateModal">取消</button>
+      <button class="btn-primary-sm" style="background: {{currentTheme.gradient}}; color: {{currentTheme.btnText}};" bindtap="confirmPreGenerate">开始预生成</button>
     </view>
   </view>
 </view>

@@ -1,11 +1,12 @@
-const dateUtils = require('../../utils/dateUtils.js');
+var dateUtils = require('../../utils/dateUtils.js');
 
 Component({
   properties: {
     year: { type: Number, value: 2026 },
     month: { type: Number, value: 1 },
     monthData: { type: Array, value: [] },
-    today: { type: Object, value: null }
+    today: { type: Object, value: null },
+    currentTheme: { type: Object, value: null }
   },
 
   data: {
@@ -26,11 +27,9 @@ Component({
       const firstDay = dateUtils.getFirstDayOfWeek(year, month);
 
       const days = [];
-      // 上月填充
       for (let i = 0; i < firstDay; i++) {
         days.push({ day: '', empty: true });
       }
-      // 当月
       for (let d = 1; d <= daysInMonth; d++) {
         const idx = d - 1;
         const huangliDay = this.data.monthData[idx];

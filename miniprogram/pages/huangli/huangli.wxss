@@ -1,5 +1,8 @@
-page { background: #FFF8DC; }
+/* page bg handled by inline style on .container */
 .container { padding: 20rpx 30rpx 40rpx; }
+
+/* 八字切换器 */
+.page-header { margin-bottom: 10rpx; }
 
 /* 月份切换 */
 .month-header {

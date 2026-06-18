@@ -1,4 +1,5 @@
 const api = require('../../utils/api.js');
+const app = getApp();
 
 Page({
   data: {
@@ -11,6 +12,7 @@ Page({
 
   onLoad(options) {
     const { year, month, day } = options;
+    this.syncTheme();
     if (year) this.setData({
       year: parseInt(year),
       month: parseInt(month),
@@ -19,10 +21,21 @@ Page({
     this.loadDetail();
   },
 
+  syncTheme() {
+    var theme = app.globalData.currentTheme;
+    this.setData({ currentTheme: theme });
+    wx.setNavigationBarColor({
+      frontColor: '#ffffff',
+      backgroundColor: theme.navBg,
+      animation: { duration: 300, timingFunc: 'easeIn' }
+    });
+  },
+
   async loadDetail() {
     const { year, month, day } = this.data;
+    const baziId = app.globalData.currentBaziId;
     try {
-      const result = await api.getTodayHuangli(year, month, day);
+      const result = await api.getTodayHuangli(year, month, day, baziId);
       if (result.success) {
         this.setData({ huangli: result.huangli, loading: false });
       } else {

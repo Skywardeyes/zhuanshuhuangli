@@ -1,16 +1,9 @@
 Component({
   properties: {
-    dayun: {
-      type: Object,
-      value: { direction: '', qiyunAge: 0, dayunList: [] }
-    },
-    currentAge: {
-      type: Number,
-      value: 0
-    }
+    dayun: { type: Object, value: { direction: '', qiyunAge: 0, dayunList: [] } },
+    currentAge: { type: Number, value: 0 },
+    currentTheme: { type: Object, value: null }
   },
-
-  computed: {},
 
   methods: {
     isCurrentDayun(item) {

@@ -26,12 +26,13 @@ function calcYearPillar(year, month, day) {
 
 // ── 2. 月柱计算 ──
 // 以节气为分界线。月支按节气确定，月干按年上起月法
-function calcMonthPillar(year, month, day) {
+function calcMonthPillar(year, month, day, getJieqiFn) {
+  const lookupJieqi = getJieqiFn || getJieqiDate;
   // 确定月支(按节气)
   let monthIndex = -1;
   for (let i = 0; i < 12; i++) {
-    const jie = getJieqiDate(year, C.MONTH_JIE[i]);
-    const nextJie = i < 11 ? getJieqiDate(year, C.MONTH_JIE[i + 1]) : getJieqiDate(year + 1, C.MONTH_JIE[0]);
+    const jie = lookupJieqi(year, C.MONTH_JIE[i]);
+    const nextJie = i < 11 ? lookupJieqi(year, C.MONTH_JIE[i + 1]) : lookupJieqi(year + 1, C.MONTH_JIE[0]);
 
     const jieDate = jie.month * 100 + jie.day;
     const nextJieDate = nextJie.month * 100 + (nextJie.year > year ? nextJie.day + 1200 : nextJie.day);

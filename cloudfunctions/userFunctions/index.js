@@ -3,10 +3,11 @@ cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 const db = cloud.database();
 
 exports.main = async (event, context) => {
-  const wxContext = cloud.getWXContext();
-  const openid = wxContext.OPENID;
+  try {
+    const wxContext = cloud.getWXContext();
+    const openid = wxContext.OPENID;
 
-  switch (event.type) {
+    switch (event.type) {
     case 'getOrCreateUser': {
       const res = await db.collection('users').where({ _openid: openid }).get();
       if (res.data.length > 0) {
@@ -24,6 +25,7 @@ exports.main = async (event, context) => {
         birthplace: '',
         birthProvince: '',
         birthCity: '',
+        activeBaziId: '',
         createdAt: db.serverDate(),
         updatedAt: db.serverDate()
       };
@@ -54,11 +56,28 @@ exports.main = async (event, context) => {
       const res = await db.collection('users').where({ _openid: openid }).get();
       if (res.data.length === 0) return { success: false, errMsg: '用户不存在' };
       const user = res.data[0];
-      const baziRes = await db.collection('bazi_records').where({ _openid: openid }).orderBy('createdAt', 'desc').limit(1).get();
-      return { success: true, user, baziRecord: baziRes.data.length > 0 ? baziRes.data[0] : null };
+      const baziRes = await db.collection('bazi_records').where({ _openid: openid }).orderBy('createdAt', 'desc').limit(20).get();
+      return {
+        success: true,
+        user: user,
+        baziRecords: baziRes.data,
+        activeBaziId: user.activeBaziId || ''
+      };
     }
 
-    default:
-      return { success: false, errMsg: '未知操作类型' };
+    case 'setActiveBazi': {
+      var baziId = event.baziId || '';
+      await db.collection('users').where({ _openid: openid }).update({
+        data: { activeBaziId: baziId, updatedAt: db.serverDate() }
+      });
+      return { success: true };
+    }
+
+      default:
+        return { success: false, errMsg: '未知操作类型' };
+    }
+  } catch (err) {
+    console.error('[userFunctions][' + (event && event.type) + ']', err);
+    return { success: false, errMsg: '服务异常，请稍后重试', errDetail: err.message || String(err) };
   }
 };

@@ -1,0 +1,37 @@
+<view class="bazi-switcher" wx:if="{{visible && baziList.length > 0}}">
+  <!-- 切换按钮 -->
+  <view class="switcher-trigger" style="border-color: {{currentTheme.border}};" bindtap="toggleDropdown">
+    <text class="switcher-icon">☰</text>
+    <text class="switcher-name" style="color: {{currentTheme.primary}};">{{currentName}}</text>
+    <text class="switcher-arrow" style="color: {{currentTheme.subText}};" wx:if="{{baziList.length > 1}}">▾</text>
+  </view>
+
+  <!-- 下拉遮罩 -->
+  <view class="dropdown-overlay" wx:if="{{showDropdown}}" bindtap="closeDropdown"></view>
+
+  <!-- 下拉面板 -->
+  <view class="dropdown-panel" wx:if="{{showDropdown}}">
+    <view class="dropdown-header" style="border-color: {{currentTheme.border}};">
+      <text class="dropdown-title" style="color: {{currentTheme.primary}};">切换八字</text>
+      <text class="dropdown-close" style="color: {{currentTheme.subText}};" bindtap="closeDropdown">✕</text>
+    </view>
+    <scroll-view class="dropdown-list" scroll-y="true">
+      <view
+        wx:for="{{baziList}}"
+        wx:key="_id"
+        class="dropdown-item {{item._id === currentBaziId ? 'active' : ''}}"
+        style="{{item._id === currentBaziId ? 'background: ' + currentTheme.highlight : ''}}; border-color: {{currentTheme.border}};"
+        data-id="{{item._id}}"
+        bindtap="selectBazi"
+      >
+        <text class="item-name" style="color: {{currentTheme.bodyText}};">{{item.name || ('八字' + (index + 1))}}</text>
+        <text class="item-date" style="color: {{currentTheme.subText}};">{{item.birthYear}}/{{item.birthMonth}}/{{item.birthDay}}</text>
+        <text class="item-check" style="color: {{currentTheme.primary}};" wx:if="{{item._id === currentBaziId}}">✓</text>
+      </view>
+    </scroll-view>
+    <view class="dropdown-footer" style="border-color: {{currentTheme.border}};" bindtap="goToCreate">
+      <text class="footer-icon" style="color: {{currentTheme.primary}};">+</text>
+      <text class="footer-text" style="color: {{currentTheme.primary}};">创建新八字</text>
+    </view>
+  </view>
+</view>

@@ -1,4 +1,4 @@
-page { background: #FFF8DC; }
+/* page bg handled by inline style on .container */
 .container { padding: 20rpx 30rpx 60rpx; }
 
 .loading-wrap { padding: 200rpx 0; text-align: center; }

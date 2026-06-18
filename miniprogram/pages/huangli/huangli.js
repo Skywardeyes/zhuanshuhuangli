@@ -17,42 +17,71 @@ Page({
     const now = new Date();
     const today = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() };
     this.setData({ year: today.year, month: today.month, today });
+    this.syncTheme();
     this.loadData();
   },
 
   onShow() {
+    this.syncTheme();
     if (!app.globalData.hasBazi) {
       this.setData({ noBazi: true, loading: false });
+      return;
     }
+    this.setData({ noBazi: false });
+    // 检测八字是否已切换，切换则重新加载
+    var currentId = app.globalData.currentBaziId;
+    if (this._lastBaziId && this._lastBaziId !== currentId) {
+      this.setData({ loading: true, monthData: [], todayHuangli: null });
+      this.loadData();
+    }
+    this._lastBaziId = currentId;
+  },
+
+  syncTheme() {
+    var theme = app.globalData.currentTheme;
+    this.setData({ currentTheme: theme });
+    wx.setNavigationBarColor({
+      frontColor: '#ffffff',
+      backgroundColor: theme.navBg,
+      animation: { duration: 300, timingFunc: 'easeIn' }
+    });
+  },
+
+  onBaziChange(e) {
+    this.syncTheme();
+    this._lastBaziId = app.globalData.currentBaziId;
+    this.setData({ loading: true, monthData: [], todayHuangli: null });
+    this.loadData();
   },
 
   async loadData() {
     const { year, month } = this.data;
+    const baziId = app.globalData.currentBaziId;
 
     // 检查缓存
-    const cached = cache.getCachedMonthHuangli(year, month);
+    const cached = cache.getCachedMonthHuangli(year, month, baziId);
     if (cached) {
       this.setData({ monthData: cached, loading: false });
     }
 
     try {
-      const result = await api.getMonthHuangli(year, month);
+      const result = await api.getMonthHuangli(year, month, baziId);
       if (result.success) {
         this.setData({ monthData: result.monthData, loading: false });
-        cache.cacheMonthHuangli(year, month, result.monthData);
+        cache.cacheMonthHuangli(year, month, result.monthData, baziId);
       }
     } catch (err) {
       this.setData({ loading: false });
     }
 
-    // 加载今日黄历
     this.loadTodayHuangli();
   },
 
   async loadTodayHuangli() {
     const { year, month, today } = this.data;
+    const baziId = app.globalData.currentBaziId;
     try {
-      const result = await api.getTodayHuangli(year, month, today.day);
+      const result = await api.getTodayHuangli(year, month, today.day, baziId);
       if (result.success) {
         this.setData({ todayHuangli: result.huangli });
       }

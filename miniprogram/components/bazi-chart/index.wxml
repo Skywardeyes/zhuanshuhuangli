@@ -1,58 +1,58 @@
-<view class="bazi-table">
+<view class="bazi-table" style="border-color: {{currentTheme.primary}}; background: {{currentTheme.cardBg}};">
   <!-- 表头 -->
-  <view class="table-row header">
+  <view class="table-row header" style="background: {{currentTheme.gradient}};">
     <view class="cell label"></view>
     <view class="cell">年柱</view>
     <view class="cell">月柱</view>
-    <view class="cell day-col">日柱</view>
+    <view class="cell day-col" style="background: rgba(255,255,255,0.15);">日柱</view>
     <view class="cell">时柱</view>
   </view>
 
   <!-- 天干 -->
-  <view class="table-row">
-    <view class="cell label">天干</view>
-    <view class="cell">{{pillars.year.stem || '-'}}</view>
-    <view class="cell">{{pillars.month.stem || '-'}}</view>
-    <view class="cell day-col day-master">{{pillars.day.stem || '-'}}</view>
-    <view class="cell">{{pillars.hour.stem || '?'}}</view>
+  <view class="table-row" style="border-color: {{currentTheme.border}};">
+    <view class="cell label" style="color: {{currentTheme.subText}};">天干</view>
+    <view class="cell" style="color: {{currentTheme.bodyText}};">{{pillars.year.stem || '-'}}</view>
+    <view class="cell" style="color: {{currentTheme.bodyText}};">{{pillars.month.stem || '-'}}</view>
+    <view class="cell day-col day-master" style="background: {{currentTheme.highlight}}; color: {{currentTheme.primary}};">{{pillars.day.stem || '-'}}</view>
+    <view class="cell" style="color: {{currentTheme.bodyText}};">{{pillars.hour.stem || '?'}}</view>
   </view>
 
   <!-- 地支 -->
-  <view class="table-row">
-    <view class="cell label">地支</view>
-    <view class="cell">{{pillars.year.branch || '-'}}</view>
-    <view class="cell">{{pillars.month.branch || '-'}}</view>
-    <view class="cell day-col">{{pillars.day.branch || '-'}}</view>
-    <view class="cell">{{pillars.hour.branch || '?'}}</view>
+  <view class="table-row" style="border-color: {{currentTheme.border}};">
+    <view class="cell label" style="color: {{currentTheme.subText}};">地支</view>
+    <view class="cell" style="color: {{currentTheme.bodyText}};">{{pillars.year.branch || '-'}}</view>
+    <view class="cell" style="color: {{currentTheme.bodyText}};">{{pillars.month.branch || '-'}}</view>
+    <view class="cell day-col" style="background: {{currentTheme.highlight}}; color: {{currentTheme.bodyText}};">{{pillars.day.branch || '-'}}</view>
+    <view class="cell" style="color: {{currentTheme.bodyText}};">{{pillars.hour.branch || '?'}}</view>
   </view>
 
   <!-- 十神 -->
-  <view class="table-row">
-    <view class="cell label">十神</view>
-    <view class="cell">{{pillars.year.shishen || ''}}</view>
-    <view class="cell">{{pillars.month.shishen || ''}}</view>
-    <view class="cell day-col">日主</view>
-    <view class="cell">{{pillars.hour.shishen || ''}}</view>
+  <view class="table-row" style="border-color: {{currentTheme.border}};">
+    <view class="cell label" style="color: {{currentTheme.subText}};">十神</view>
+    <view class="cell" style="color: {{currentTheme.bodyText}};">{{pillars.year.shishen || ''}}</view>
+    <view class="cell" style="color: {{currentTheme.bodyText}};">{{pillars.month.shishen || ''}}</view>
+    <view class="cell day-col" style="background: {{currentTheme.highlight}}; color: {{currentTheme.primary}};">日主</view>
+    <view class="cell" style="color: {{currentTheme.bodyText}};">{{pillars.hour.shishen || ''}}</view>
   </view>
 
   <!-- 藏干 (可折叠) -->
-  <view class="table-row canggan-row" wx:if="{{showCanggan}}">
-    <view class="cell label">藏干</view>
-    <view class="cell canggan-cell">
+  <view class="table-row canggan-row" wx:if="{{showCanggan}}" style="border-color: {{currentTheme.border}};">
+    <view class="cell label" style="color: {{currentTheme.subText}};">藏干</view>
+    <view class="cell canggan-cell" style="color: {{currentTheme.subText}};">
       <text wx:for="{{pillars.year.canggan}}" wx:key="gan">{{item.gan}} </text>
     </view>
-    <view class="cell canggan-cell">
+    <view class="cell canggan-cell" style="color: {{currentTheme.subText}};">
       <text wx:for="{{pillars.month.canggan}}" wx:key="gan">{{item.gan}} </text>
     </view>
-    <view class="cell canggan-cell day-col">
+    <view class="cell canggan-cell day-col" style="background: {{currentTheme.highlight}}; color: {{currentTheme.subText}};">
       <text wx:for="{{pillars.day.canggan}}" wx:key="gan">{{item.gan}} </text>
     </view>
-    <view class="cell canggan-cell">
+    <view class="cell canggan-cell" style="color: {{currentTheme.subText}};">
       <text wx:for="{{pillars.hour.canggan}}" wx:key="gan">{{item.gan}} </text>
     </view>
   </view>
 
-  <view class="toggle-canggan" bindtap="toggleCanggan">
+  <view class="toggle-canggan" bindtap="toggleCanggan" style="color: {{currentTheme.accent}};">
     <text>{{showCanggan ? '收起藏干 ▲' : '展开藏干 ▼'}}</text>
   </view>
 </view>

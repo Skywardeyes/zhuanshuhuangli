@@ -45,24 +45,24 @@ function clear() {
   } catch (e) { /* ignore */ }
 }
 
-// 缓存今天的黄历
-function cacheTodayHuangli(data) {
+// 缓存今天的黄历（增加 baziId 隔离）
+function cacheTodayHuangli(data, baziId) {
   const today = formatDate(new Date());
-  set('today_huangli_' + today, data, 3600000); // 1小时过期
+  set('today_huangli_' + (baziId || 'default') + '_' + today, data, 3600000); // 1小时过期
 }
 
-function getCachedTodayHuangli() {
+function getCachedTodayHuangli(baziId) {
   const today = formatDate(new Date());
-  return get('today_huangli_' + today);
+  return get('today_huangli_' + (baziId || 'default') + '_' + today);
 }
 
-// 缓存月黄历
-function cacheMonthHuangli(year, month, data) {
-  set(`month_huangli_${year}_${month}`, data, 12 * 3600000); // 12小时
+// 缓存月黄历（增加 baziId 隔离）
+function cacheMonthHuangli(year, month, data, baziId) {
+  set('month_huangli_' + (baziId || 'default') + '_' + year + '_' + month, data, 12 * 3600000); // 12小时
 }
 
-function getCachedMonthHuangli(year, month) {
-  return get(`month_huangli_${year}_${month}`);
+function getCachedMonthHuangli(year, month, baziId) {
+  return get('month_huangli_' + (baziId || 'default') + '_' + year + '_' + month);
 }
 
 function formatDate(date) {
