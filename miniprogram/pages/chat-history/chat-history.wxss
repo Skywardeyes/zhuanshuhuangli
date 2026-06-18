@@ -1,0 +1,120 @@
+.container {
+  padding: 30rpx;
+}
+
+.loading-wrap {
+  text-align: center;
+  padding: 120rpx 0;
+}
+.loading-text {
+  font-size: 28rpx;
+}
+
+/* New button */
+.new-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24rpx;
+  border-radius: 16rpx;
+  margin-bottom: 24rpx;
+}
+
+/* Empty state */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100rpx 0;
+}
+
+/* Conversation card */
+.conv-card {
+  border: 1rpx solid;
+  border-radius: 16rpx;
+  padding: 24rpx 28rpx;
+  margin-bottom: 16rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.04);
+}
+.conv-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.conv-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.conv-time {
+  font-size: 22rpx;
+  flex-shrink: 0;
+  margin-left: 16rpx;
+}
+.conv-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 30rpx;
+  margin-top: 12rpx;
+}
+.conv-action {
+  font-size: 26rpx;
+}
+
+/* Modal */
+.modal-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 500;
+}
+.modal-panel {
+  width: 560rpx;
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 40rpx 36rpx;
+  border: 1rpx solid;
+}
+.modal-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 24rpx;
+}
+.rename-input {
+  width: 100%;
+  border: 1rpx solid;
+  border-radius: 12rpx;
+  padding: 16rpx;
+  font-size: 28rpx;
+  margin-bottom: 28rpx;
+  box-sizing: border-box;
+}
+.modal-btns {
+  display: flex;
+  gap: 20rpx;
+  justify-content: flex-end;
+}
+.modal-btn {
+  font-size: 28rpx;
+  padding: 16rpx 40rpx;
+  border-radius: 12rpx;
+  line-height: 1;
+}
+.modal-btn.cancel {
+  background: transparent;
+  border: 2rpx solid;
+}
+.modal-btn.confirm {
+  border: none;
+  color: #fff;
+}

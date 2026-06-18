@@ -57,6 +57,13 @@
         <text class="qa-text" style="color: {{currentTheme.bodyText}};">八字命盘</text>
       </view>
     </view>
+
+    <!-- AI 命理问答 -->
+    <chat-section
+      currentTheme="{{currentTheme}}"
+      baziRecords="{{baziRecords}}"
+      activeConversationId="{{activeConversationId}}"
+    />
   </block>
 
   <!-- 调试面板 -->

@@ -1,6 +1,7 @@
 {
   "usingComponents": {
     "huangli-card": "/components/huangli-card/index",
-    "fortune-indicator": "/components/fortune-indicator/index"
+    "fortune-indicator": "/components/fortune-indicator/index",
+    "chat-section": "/components/chat-section/index"
   }
 }

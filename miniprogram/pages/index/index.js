@@ -11,7 +11,9 @@ Page({
     envReady: true,
     envMsg: '',
     envId: '',
-    showDebug: false
+    showDebug: false,
+    baziRecords: [],
+    activeConversationId: ''
   },
 
   onLoad() {
@@ -66,7 +68,9 @@ Page({
   checkState() {
     this.setData({
       hasBazi: app.globalData.hasBazi,
-      userName: (app.globalData.userInfo && app.globalData.userInfo.nickName) || ''
+      userName: (app.globalData.userInfo && app.globalData.userInfo.nickName) || '',
+      baziRecords: app.globalData.baziRecords || [],
+      activeConversationId: app.globalData.activeConversationId || ''
     });
   },
 

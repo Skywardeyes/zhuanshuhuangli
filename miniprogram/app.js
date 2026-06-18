@@ -10,7 +10,8 @@ App({
       currentBazi: null,
       currentTheme: themeUtils.DEFAULT_THEME,
       todayHuangli: null,
-      hasBazi: false
+      hasBazi: false,
+      activeConversationId: ''
     };
     if (!wx.cloud) {
       console.error("请使用 2.2.3 或以上的基础库以使用云能力");
@@ -21,6 +22,11 @@ App({
       });
     }
     this.loadLocalState();
+    // 恢复对话状态
+    var convId = wx.getStorageSync('activeConversationId');
+    if (convId) {
+      this.globalData.activeConversationId = convId;
+    }
   },
 
   // 从本地存储恢复状态
@@ -119,5 +125,17 @@ App({
     this.applyGlobalTheme();
     wx.removeStorageSync('baziRecords');
     wx.removeStorageSync('currentBaziId');
+  },
+
+  // 设置当前对话
+  setActiveConversation: function (conversationId) {
+    this.globalData.activeConversationId = conversationId;
+    wx.setStorageSync('activeConversationId', conversationId);
+  },
+
+  // 清空当前对话
+  clearActiveConversation: function () {
+    this.globalData.activeConversationId = '';
+    wx.removeStorageSync('activeConversationId');
   }
 });

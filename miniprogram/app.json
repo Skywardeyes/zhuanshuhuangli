@@ -5,7 +5,8 @@
     "pages/profile/profile",
     "pages/birth-input/birth-input",
     "pages/fortune/fortune",
-    "pages/huangli-detail/huangli-detail"
+    "pages/huangli-detail/huangli-detail",
+    "pages/chat-history/chat-history"
   ],
   "window": {
     "backgroundColor": "#FFF8DC",

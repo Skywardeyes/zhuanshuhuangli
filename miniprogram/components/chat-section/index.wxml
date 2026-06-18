@@ -1,0 +1,125 @@
+<view class="chat-container">
+  <!-- Header -->
+  <view class="chat-header">
+    <view class="chat-header-left">
+      <text class="chat-title" style="color: {{currentTheme.primary}};">命理问答</text>
+    </view>
+    <view class="chat-header-right">
+      <text class="chat-header-btn" style="color: {{currentTheme.accent}};" bindtap="onNewChat">新建</text>
+      <text class="chat-header-btn" style="color: {{currentTheme.accent}};" bindtap="onManageChats">管理</text>
+    </view>
+  </view>
+
+  <!-- Messages -->
+  <scroll-view
+    class="chat-messages"
+    scroll-y
+    scroll-into-view="{{scrollToView}}"
+    scroll-with-animation
+    enhanced
+    show-scrollbar="{{false}}"
+  >
+    <view wx:if="{{loadingMessages}}" class="chat-loading">
+      <text style="color: {{currentTheme.subText}};">加载消息中...</text>
+    </view>
+
+    <view wx:if="{{!loadingMessages && messages.length === 0}}" class="chat-empty">
+      <text style="color: {{currentTheme.mutedText}};">输入问题开始命理问答</text>
+      <text style="color: {{currentTheme.mutedText}}; font-size: 22rpx; margin-top: 8rpx;">支持同时对比多个八字的命理分析</text>
+    </view>
+
+    <block wx:for="{{messages}}" wx:key="_id">
+      <view class="msg-wrap {{item.role === 'user' ? 'msg-user' : 'msg-ai'}}" id="msg-{{index + 1}}">
+        <!-- AI avatar -->
+        <view wx:if="{{item.role === 'assistant'}}" class="msg-avatar" style="background: {{currentTheme.gradient}};">
+          <text style="color: {{currentTheme.btnText}}; font-size: 24rpx;">☯</text>
+        </view>
+
+        <view class="msg-bubble {{item.role === 'user' ? 'bubble-user' : 'bubble-ai'}}"
+              style="{{item.role === 'user' ? 'background: ' + currentTheme.gradient + '; color: ' + currentTheme.btnText : 'background: ' + currentTheme.cardBg + '; color: ' + currentTheme.bodyText + '; border: 2rpx solid ' + currentTheme.border}}">
+          <text class="msg-content" style="{{item.role === 'user' ? 'color: ' + currentTheme.btnText : 'color: ' + currentTheme.bodyText}};">{{item.displayText}}</text>
+          <text wx:if="{{item.role === 'assistant' && !item._completed}}" class="cursor-blink" style="color: {{currentTheme.primary}};">▎</text>
+        </view>
+
+        <!-- User avatar -->
+        <view wx:if="{{item.role === 'user'}}" class="msg-avatar" style="background: {{currentTheme.highlight}};">
+          <text style="color: {{currentTheme.primary}}; font-size: 24rpx;">我</text>
+        </view>
+      </view>
+    </block>
+
+    <!-- Sending indicator -->
+    <view wx:if="{{sending}}" class="msg-wrap msg-ai">
+      <view class="msg-avatar" style="background: {{currentTheme.gradient}};">
+        <text style="color: {{currentTheme.btnText}}; font-size: 24rpx;">☯</text>
+      </view>
+      <view class="msg-bubble bubble-ai thinking-bubble" style="background: {{currentTheme.cardBg}}; border: 2rpx solid {{currentTheme.border}};">
+        <text style="color: {{currentTheme.subText}};">思考中</text>
+        <view class="thinking-dots">
+          <view class="dot" style="background: {{currentTheme.subText}};"></view>
+          <view class="dot" style="background: {{currentTheme.subText}};"></view>
+          <view class="dot" style="background: {{currentTheme.subText}};"></view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- Selected bazi tags -->
+  <view wx:if="{{selectedBaziIds.length > 0}}" class="bazi-tags-bar" style="border-color: {{currentTheme.border}};">
+    <text class="tags-label" style="color: {{currentTheme.subText}};">已选：</text>
+    <block wx:for="{{selectedBaziIds}}" wx:key="*this">
+      <text class="bazi-tag" style="background: {{currentTheme.highlight}}; color: {{currentTheme.primary}};">{{baziRecords[index] ? baziRecords[index].name : '?'}}</text>
+    </block>
+  </view>
+
+  <!-- Bazi selector panel -->
+  <view wx:if="{{showBaziSelector}}" class="bazi-panel" style="background: {{currentTheme.cardBg}}; border-color: {{currentTheme.border}};">
+    <view class="bazi-panel-header" style="border-color: {{currentTheme.divider}};">
+      <text style="color: {{currentTheme.bodyText}}; font-weight: bold;">选择八字</text>
+      <view class="bazi-panel-actions">
+        <text class="panel-action" style="color: {{currentTheme.accent}};" bindtap="selectAllBazis">全选</text>
+        <text class="panel-action" style="color: {{currentTheme.accent}};" bindtap="clearBaziSelection">清空</text>
+        <text class="panel-action" style="color: {{currentTheme.mutedText}};" bindtap="toggleBaziSelector">收起</text>
+      </view>
+    </view>
+    <scroll-view scroll-y class="bazi-panel-list">
+      <view wx:for="{{baziRecords}}" wx:key="_id" class="bazi-check-item" style="border-color: {{currentTheme.divider}};" bindtap="toggleBaziCheck" data-id="{{item._id}}">
+        <view class="bazi-checkbox {{selectedBaziIds.indexOf(item._id) >= 0 ? 'checked' : ''}}"
+              style="{{selectedBaziIds.indexOf(item._id) >= 0 ? 'background: ' + currentTheme.primary + '; border-color: ' + currentTheme.primary : 'border-color: ' + currentTheme.border}};">
+          <text wx:if="{{selectedBaziIds.indexOf(item._id) >= 0}}" style="color: #fff; font-size: 20rpx;">✓</text>
+        </view>
+        <view class="bazi-check-info">
+          <text class="bazi-check-name" style="color: {{currentTheme.bodyText}};">{{item.name || '未命名'}}</text>
+          <text class="bazi-check-detail" style="color: {{currentTheme.subText}};">{{item.birthSolar || ''}} · {{item.dayMaster || ''}}日主</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- Input bar -->
+  <view class="chat-input-bar" style="background: {{currentTheme.cardBg}}; border-color: {{currentTheme.border}};">
+    <view class="input-row">
+      <view class="attach-btn" bindtap="toggleBaziSelector" style="border-color: {{currentTheme.border}};">
+        <text style="color: {{currentTheme.accent}}; font-size: 22rpx;">{{selectedBaziIds.length > 0 ? '八字(' + selectedBaziIds.length + ')' : '附加八字'}}</text>
+      </view>
+      <textarea
+        class="chat-textarea"
+        style="background: {{currentTheme.bg}}; color: {{currentTheme.bodyText}}; border-color: {{currentTheme.border}};"
+        value="{{inputText}}"
+        placeholder="输入命理问题..."
+        placeholder-style="color: {{currentTheme.mutedText}}"
+        maxlength="500"
+        auto-height
+        adjust-position="{{false}}"
+        bindinput="onInputChange"
+        confirm-type="send"
+        bindconfirm="onSend"
+      />
+      <view class="send-btn {{inputText && !sending ? '' : 'disabled'}}"
+            style="{{inputText && !sending ? 'background: ' + currentTheme.gradient : 'background: ' + currentTheme.border}}"
+            bindtap="onSend">
+        <text style="color: {{inputText && !sending ? currentTheme.btnText : currentTheme.mutedText}}; font-size: 28rpx; font-weight: bold;">发送</text>
+      </view>
+    </view>
+  </view>
+</view>

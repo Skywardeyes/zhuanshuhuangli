@@ -1,0 +1,53 @@
+<view class="container" style="background: {{currentTheme.bg}}; min-height: 100vh;">
+
+  <view wx:if="{{loading}}" class="loading-wrap">
+    <text class="loading-text" style="color: {{currentTheme.subText}};">加载中...</text>
+  </view>
+
+  <block wx:if="{{!loading}}">
+    <!-- New conversation button -->
+    <view class="new-btn" style="background: {{currentTheme.gradient}}; color: {{currentTheme.btnText}};" bindtap="onNewConversation">
+      <text style="color: {{currentTheme.btnText}}; font-size: 28rpx;">+ 新建对话</text>
+    </view>
+
+    <!-- Empty state -->
+    <view wx:if="{{conversations.length === 0}}" class="empty-state">
+      <text style="color: {{currentTheme.mutedText}}; font-size: 28rpx;">还没有对话记录</text>
+      <text style="color: {{currentTheme.mutedText}}; font-size: 24rpx; margin-top: 8rpx;">返回首页开始命理问答</text>
+    </view>
+
+    <!-- Conversation list -->
+    <view wx:for="{{conversations}}" wx:key="_id" class="conv-card" style="border-color: {{currentTheme.border}}; background: {{currentTheme.cardBg}};" bindtap="enterConversation" data-id="{{item._id}}">
+      <view class="conv-main">
+        <text class="conv-title" style="color: {{currentTheme.bodyText}};">{{item.title || '新对话'}}</text>
+        <text class="conv-time" style="color: {{currentTheme.mutedText}};">{{formatTime(item.updatedAt) || formatTime(item.createdAt)}}</text>
+      </view>
+      <view class="conv-actions">
+        <text class="conv-action" style="color: {{currentTheme.accent}};" catchtap="onRenameTap" data-id="{{item._id}}" data-title="{{item.title}}">重命名</text>
+        <text class="conv-action delete" style="color: {{currentTheme.jiColor}};" catchtap="onDeleteTap" data-id="{{item._id}}">删除</text>
+      </view>
+    </view>
+  </block>
+
+  <!-- Rename Modal -->
+  <view wx:if="{{showRenameModal}}" class="modal-mask" bindtap="closeRenameModal">
+    <view class="modal-panel" style="background: {{currentTheme.cardBg}}; border-color: {{currentTheme.border}};" catchtap="">
+      <text class="modal-title" style="color: {{currentTheme.bodyText}};">重命名对话</text>
+      <input
+        class="rename-input"
+        style="color: {{currentTheme.bodyText}}; border-color: {{currentTheme.border}}; background: {{currentTheme.bg}};"
+        value="{{renameTitle}}"
+        placeholder="输入新名称"
+        maxlength="50"
+        bindinput="onRenameInput"
+        confirm-type="done"
+        bindconfirm="confirmRename"
+      />
+      <view class="modal-btns">
+        <button class="modal-btn cancel" style="border-color: {{currentTheme.border}}; color: {{currentTheme.subText}};" bindtap="closeRenameModal">取消</button>
+        <button class="modal-btn confirm" style="background: {{currentTheme.gradient}}; color: {{currentTheme.btnText}};" bindtap="confirmRename">确认</button>
+      </view>
+    </view>
+  </view>
+
+</view>

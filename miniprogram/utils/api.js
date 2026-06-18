@@ -148,6 +148,37 @@ function preGenerateHuangli(baziId, year, month, numMonths) {
   }, { showLoading: false });
 }
 
+// ── AI Chat ──
+
+function sendChatMessage(data) {
+  data.type = 'sendMessage';
+  return callFunction('aiChatFunctions', data, { loadingTitle: '思考中...' });
+}
+
+function listConversations() {
+  return callFunction('aiChatFunctions', { type: 'listConversations' }, { showLoading: false });
+}
+
+function createConversation(title) {
+  return callFunction('aiChatFunctions', { type: 'createConversation', title: title || '新对话' }, { showLoading: false });
+}
+
+function renameConversation(conversationId, title) {
+  return callFunction('aiChatFunctions', { type: 'renameConversation', conversationId: conversationId, title: title }, { showLoading: false });
+}
+
+function deleteConversation(conversationId) {
+  return callFunction('aiChatFunctions', { type: 'deleteConversation', conversationId: conversationId }, { loadingTitle: '删除中...' });
+}
+
+function getChatMessages(conversationId) {
+  return callFunction('aiChatFunctions', { type: 'getMessages', conversationId: conversationId }, { showLoading: false });
+}
+
+function getConversationDetail(conversationId) {
+  return callFunction('aiChatFunctions', { type: 'getConversationDetail', conversationId: conversationId }, { showLoading: false });
+}
+
 module.exports = {
   callFunction: callFunction,
   getUserProfile: getUserProfile,
@@ -161,5 +192,12 @@ module.exports = {
   deleteBaziRecord: deleteBaziRecord,
   setActiveBazi: setActiveBazi,
   preGenerateHuangli: preGenerateHuangli,
-  updateBaziRecord: updateBaziRecord
+  updateBaziRecord: updateBaziRecord,
+  sendChatMessage: sendChatMessage,
+  listConversations: listConversations,
+  createConversation: createConversation,
+  renameConversation: renameConversation,
+  deleteConversation: deleteConversation,
+  getChatMessages: getChatMessages,
+  getConversationDetail: getConversationDetail
 };

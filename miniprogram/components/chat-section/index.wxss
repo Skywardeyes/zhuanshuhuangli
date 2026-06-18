@@ -1,0 +1,233 @@
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 600rpx;
+  margin-top: 40rpx;
+}
+
+/* Header */
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 8rpx 16rpx;
+}
+.chat-title {
+  font-family: 'Songti SC', serif;
+  font-size: 36rpx;
+  font-weight: bold;
+}
+.chat-header-right {
+  display: flex;
+  gap: 24rpx;
+}
+.chat-header-btn {
+  font-size: 26rpx;
+}
+
+/* Messages */
+.chat-messages {
+  flex: 1;
+  padding: 16rpx 0;
+  overflow-y: auto;
+}
+.chat-loading {
+  text-align: center;
+  padding: 40rpx;
+  font-size: 26rpx;
+}
+.chat-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60rpx 20rpx;
+  font-size: 26rpx;
+}
+
+.msg-wrap {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 20rpx;
+  padding: 0 4rpx;
+}
+.msg-user {
+  flex-direction: row-reverse;
+}
+.msg-ai {
+  flex-direction: row;
+}
+
+.msg-avatar {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.msg-bubble {
+  max-width: 480rpx;
+  padding: 16rpx 20rpx;
+  border-radius: 16rpx;
+  line-height: 1.7;
+  word-break: break-all;
+}
+.bubble-user {
+  margin-right: 12rpx;
+  border-radius: 16rpx 4rpx 16rpx 16rpx;
+}
+.bubble-ai {
+  margin-left: 12rpx;
+  border-radius: 4rpx 16rpx 16rpx 16rpx;
+}
+.msg-content {
+  font-size: 28rpx;
+  white-space: pre-wrap;
+}
+.cursor-blink {
+  animation: blink 1s infinite;
+  font-size: 28rpx;
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Thinking */
+.thinking-bubble {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  font-size: 26rpx;
+}
+.thinking-dots {
+  display: flex;
+  gap: 6rpx;
+  align-items: center;
+}
+.dot {
+  width: 8rpx;
+  height: 8rpx;
+  border-radius: 50%;
+  animation: dotPulse 1.4s infinite ease-in-out;
+}
+.dot:nth-child(2) { animation-delay: 0.2s; }
+.dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes dotPulse {
+  0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
+  40% { opacity: 1; transform: scale(1); }
+}
+
+/* Bazi tags bar */
+.bazi-tags-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8rpx;
+  padding: 10rpx 4rpx;
+  border-top: 1rpx solid;
+}
+.tags-label {
+  font-size: 22rpx;
+}
+.bazi-tag {
+  font-size: 22rpx;
+  padding: 4rpx 14rpx;
+  border-radius: 20rpx;
+}
+
+/* Bazi selector panel */
+.bazi-panel {
+  border: 1rpx solid;
+  border-radius: 12rpx;
+  max-height: 300rpx;
+  display: flex;
+  flex-direction: column;
+}
+.bazi-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12rpx 16rpx;
+  border-bottom: 1rpx solid;
+}
+.bazi-panel-actions {
+  display: flex;
+  gap: 20rpx;
+}
+.panel-action {
+  font-size: 24rpx;
+}
+.bazi-panel-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8rpx 0;
+}
+.bazi-check-item {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 14rpx 16rpx;
+  border-bottom: 1rpx solid;
+}
+.bazi-check-item:last-child {
+  border-bottom: none;
+}
+.bazi-checkbox {
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: 6rpx;
+  border: 2rpx solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.bazi-check-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+}
+.bazi-check-name {
+  font-size: 28rpx;
+}
+.bazi-check-detail {
+  font-size: 22rpx;
+}
+
+/* Input bar */
+.chat-input-bar {
+  border-top: 1rpx solid;
+  padding: 12rpx 8rpx 0;
+}
+.input-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 10rpx;
+}
+.attach-btn {
+  flex-shrink: 0;
+  padding: 10rpx 12rpx;
+  border: 1rpx solid;
+  border-radius: 8rpx;
+  margin-bottom: 4rpx;
+}
+.chat-textarea {
+  flex: 1;
+  border: 1rpx solid;
+  border-radius: 12rpx;
+  padding: 12rpx 16rpx;
+  font-size: 28rpx;
+  min-height: 40rpx;
+  max-height: 120rpx;
+}
+.send-btn {
+  flex-shrink: 0;
+  padding: 12rpx 20rpx;
+  border-radius: 12rpx;
+}
+.send-btn.disabled {
+  opacity: 0.5;
+}
